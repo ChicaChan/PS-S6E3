@@ -3,6 +3,8 @@
 #   --train-path train.csv \
 #   --test-path test.csv \
 #   --sample-submission-path sample_submission.csv \
+#   --id-col id \
+#   --target-col Churn \
 #   --max-train-rows 4000 \
 #   --max-test-rows 1500
 
@@ -22,6 +24,7 @@ def build_small_sample(
     train_df: pd.DataFrame,
     test_df: pd.DataFrame,
     sample_sub_df: pd.DataFrame,
+    id_col: str,
     target_col: str,
     max_train_rows: int,
     max_test_rows: int,
@@ -44,8 +47,8 @@ def build_small_sample(
         test_small = test_df.copy()
 
     sample_small = (
-        sample_sub_df.set_index("id")
-        .loc[test_small["id"].values]
+        sample_sub_df.set_index(id_col)
+        .loc[test_small[id_col].values]
         .reset_index()
     )
     return train_small, test_small, sample_small
@@ -67,6 +70,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--train-path", type=Path, required=True)
     parser.add_argument("--test-path", type=Path, required=True)
     parser.add_argument("--sample-submission-path", type=Path, required=True)
+    parser.add_argument("--id-col", type=str, default="id")
     parser.add_argument("--target-col", type=str, default="Churn")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--max-train-rows", type=int, default=4000)
@@ -91,6 +95,7 @@ def main() -> None:
         train_df=train_df,
         test_df=test_df,
         sample_sub_df=sample_sub_df,
+        id_col=args.id_col,
         target_col=args.target_col,
         max_train_rows=args.max_train_rows,
         max_test_rows=args.max_test_rows,
@@ -107,8 +112,8 @@ def main() -> None:
     sample_small.to_csv(sample_small_path, index=False)
 
     smoke_config = {
-        "target_col": "Churn",
-        "id_col": "id",
+        "target_col": args.target_col,
+        "id_col": args.id_col,
         "positive_label": "Yes",
         "negative_label": "No",
         "seed": args.seed,
@@ -172,9 +177,9 @@ def main() -> None:
         "--sample-submission-path",
         str(sample_small_path),
         "--id-col",
-        "id",
+        args.id_col,
         "--target-col",
-        "Churn",
+        args.target_col,
     ]
     validate_result = subprocess.run(validate_cmd, text=True, capture_output=True, cwd=project_root)
     print(validate_result.stdout)

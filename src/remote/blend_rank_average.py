@@ -45,12 +45,32 @@ def load_prediction_files(
     id_col: str,
     target_col: str,
 ) -> list[np.ndarray]:
+    if id_col not in sample_df.columns:
+        raise ValueError(f"Sample submission missing id column: '{id_col}'.")
+    if sample_df[id_col].duplicated().any():
+        raise ValueError("Sample submission contains duplicate ids.")
+
     preds: list[np.ndarray] = []
     ids = sample_df[id_col].values
     for path in submission_paths:
         df = pd.read_csv(path)
+        if id_col not in df.columns:
+            raise ValueError(f"Submission '{path}' missing id column: '{id_col}'.")
+        if df[id_col].duplicated().any():
+            raise ValueError(f"Submission '{path}' contains duplicate ids.")
+
         pred_col = infer_prediction_column(df, target_col)
-        aligned = df.set_index(id_col).loc[ids, pred_col].to_numpy(dtype=np.float64)
+        indexed = df.set_index(id_col)
+        missing_ids = pd.Index(ids).difference(indexed.index)
+        if len(missing_ids) > 0:
+            preview = ", ".join(str(x) for x in missing_ids[:5].tolist())
+            raise ValueError(
+                f"Submission '{path}' is missing {len(missing_ids)} ids from sample. "
+                f"Examples: {preview}"
+            )
+        aligned = indexed.loc[ids, pred_col].to_numpy(dtype=np.float64)
+        if np.isnan(aligned).any():
+            raise ValueError(f"Submission '{path}' contains NaN predictions after alignment.")
         preds.append(aligned)
     return preds
 

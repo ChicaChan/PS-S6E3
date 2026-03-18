@@ -102,11 +102,18 @@ def detect_feature_columns(
     train_df: pd.DataFrame, id_col: str, target_col: str
 ) -> tuple[list[str], list[str], list[str]]:
     feature_cols = [c for c in train_df.columns if c not in {id_col, target_col}]
+
+    def is_categorical_like_dtype(dtype: Any) -> bool:
+        return (
+            pd.api.types.is_object_dtype(dtype)
+            or pd.api.types.is_string_dtype(dtype)
+            or pd.api.types.is_categorical_dtype(dtype)
+        )
+
     cat_cols = [
         c
         for c in feature_cols
-        if str(train_df[c].dtype) in {"object", "category", "string"}
-        or pd.api.types.is_categorical_dtype(train_df[c])
+        if is_categorical_like_dtype(train_df[c].dtype)
     ]
     num_cols = [c for c in feature_cols if c not in cat_cols]
     return feature_cols, num_cols, cat_cols
@@ -151,6 +158,8 @@ def build_target_mean_features(
     global_mean = float(np.mean(y_train))
     inner_n_splits = resolve_n_splits(y_train, inner_folds)
     inner_skf = StratifiedKFold(n_splits=inner_n_splits, shuffle=True, random_state=seed)
+    inner_splits = list(inner_skf.split(np.zeros(len(x_train)), y_train))
+    y_series = pd.Series(y_train)
 
     te_train = pd.DataFrame(index=x_train.index)
     te_val = pd.DataFrame(index=x_val.index)
@@ -164,19 +173,12 @@ def build_target_mean_features(
 
         oof_encoded = np.full(len(x_train), global_mean, dtype=np.float32)
 
-        for in_tr_idx, in_va_idx in inner_skf.split(np.zeros(len(x_train)), y_train):
-            stats_df = pd.DataFrame(
-                {
-                    "k": tr_values.iloc[in_tr_idx].to_numpy(),
-                    "y": y_train[in_tr_idx],
-                }
-            )
-            mean_map = stats_df.groupby("k", sort=False)["y"].mean()
+        for in_tr_idx, in_va_idx in inner_splits:
+            mean_map = y_series.iloc[in_tr_idx].groupby(tr_values.iloc[in_tr_idx], sort=False).mean()
             mapped = tr_values.iloc[in_va_idx].map(mean_map).fillna(global_mean).to_numpy(dtype=np.float32)
             oof_encoded[in_va_idx] = mapped
 
-        full_stats_df = pd.DataFrame({"k": tr_values.to_numpy(), "y": y_train})
-        full_mean_map = full_stats_df.groupby("k", sort=False)["y"].mean()
+        full_mean_map = y_series.groupby(tr_values, sort=False).mean()
 
         te_train[col_name] = oof_encoded
         te_val[col_name] = val_values.map(full_mean_map).fillna(global_mean).astype(np.float32)
