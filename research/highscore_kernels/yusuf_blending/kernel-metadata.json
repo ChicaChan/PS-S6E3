@@ -1,0 +1,24 @@
+{
+  "id": "yusufmurtaza01/s6e3-blending",
+  "id_no": 112189959,
+  "title": "s6e3 | blending",
+  "code_file": "s6e3-blending.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [],
+  "kernel_sources": [
+    "yusufmurtaza01/s6e3-training",
+    "yusufmurtaza01/s6e3-blend-2",
+    "nina2025/ps-s6e3-hb10",
+    "anthonytherrien/predict-customer-churn-blend"
+  ],
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "model_sources": []
+}

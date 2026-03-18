@@ -1,0 +1,13 @@
+{
+  "id": "chicachan/ps-s6e3-ridge-xgb-v1",
+  "title": "PS-S6E3 Ridge XGB V1",
+  "code_file": "train_ridge_xgb_two_stage.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "false",
+  "competition_sources": [
+    "playground-series-s6e3"
+  ]
+}

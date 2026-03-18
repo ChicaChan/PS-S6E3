@@ -1,0 +1,21 @@
+{
+  "id": "wguesdon/ps6e3-automated-public-ensemble",
+  "id_no": 110998561,
+  "title": "PS6E3 Automated Public Ensemble",
+  "code_file": "ps6e3-automated-public-ensemble.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [
+    "scheduled"
+  ],
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "model_sources": []
+}

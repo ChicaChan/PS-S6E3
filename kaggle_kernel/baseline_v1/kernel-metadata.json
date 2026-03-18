@@ -1,0 +1,13 @@
+{
+  "id": "chicachan/ps-s6e3-baseline-xgb-te-v1",
+  "title": "PS-S6E3 Baseline XGB TE V1",
+  "code_file": "train_baseline_xgb_te.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "false",
+  "competition_sources": [
+    "playground-series-s6e3"
+  ]
+}

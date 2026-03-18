@@ -1,0 +1,23 @@
+{
+  "id": "cdeotte/gnn-starter-cv-0-9155-with-hill-climbing-demo",
+  "id_no": 111686324,
+  "title": "GNN Starter [CV 0.9155] with Hill Climbing Demo",
+  "code_file": "gnn-starter-cv-0-9155-with-hill-climbing-demo.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [],
+  "kernel_sources": [
+    "cdeotte/chatgpt-vibe-coding-3xgpu-models-cv-0-9178"
+  ],
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "model_sources": []
+}

@@ -1,0 +1,13 @@
+{
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "code_file": "train_baseline_xgb_te.py",
+  "language": "python",
+  "title": "PS-S6E3 FE V1",
+  "is_private": "true",
+  "kernel_type": "script",
+  "enable_gpu": "true",
+  "enable_internet": "false",
+  "id": "chicachan/ps-s6e3-fe-v1"
+}

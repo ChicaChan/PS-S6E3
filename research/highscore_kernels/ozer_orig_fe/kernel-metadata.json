@@ -1,0 +1,23 @@
+{
+  "id": "ozermehmet/original-data-fe-single-xgb-cv-0-919-lb-0-916",
+  "id_no": 111775064,
+  "title": "Original Data FE + Single XGB[CV 0.919 | LB 0.916]",
+  "code_file": "original-data-fe-single-xgb-cv-0-919-lb-0-916.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "blastchar/telco-customer-churn"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "model_sources": []
+}

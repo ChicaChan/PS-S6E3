@@ -1,0 +1,23 @@
+{
+  "id": "lightningv08/cv-auc-0-91927-xgboost-bi-tri-target-encoding",
+  "id_no": 111496199,
+  "title": "CV AUC: 0.91927\ud83d\udd25 XGBoost + Bi/Tri Target Encoding",
+  "code_file": "cv-auc-0-91927-xgboost-bi-tri-target-encoding.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "blastchar/telco-customer-churn"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "model_sources": []
+}

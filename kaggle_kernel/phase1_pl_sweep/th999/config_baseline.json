@@ -1,0 +1,30 @@
+{
+  "pseudo_label_threshold": 0.999,
+  "min_pseudo_label_count": 500,
+  "positive_label": "Yes",
+  "target_col": "Churn",
+  "n_folds": 5,
+  "id_col": "id",
+  "inner_folds": 5,
+  "use_pseudo_label": true,
+  "xgb_params": {
+    "device": "cuda",
+    "learning_rate": 0.05,
+    "early_stopping_rounds": 300,
+    "n_estimators": 50000,
+    "reg_alpha": 0.1,
+    "gamma": 0.05,
+    "objective": "binary:logistic",
+    "verbosity": 0,
+    "colsample_bytree": 0.8,
+    "eval_metric": "auc",
+    "min_child_weight": 5,
+    "reg_lambda": 1.0,
+    "subsample": 0.8,
+    "enable_categorical": true,
+    "max_depth": 6,
+    "tree_method": "hist"
+  },
+  "seed": 42,
+  "negative_label": "No"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "cdeotte/chatgpt-vibe-coding-3xgpu-models-cv-0-9178",
+  "id_no": 111039839,
+  "title": "ChatGPT Vibe Coding - 3xGPU Models - [CV 0.9178]",
+  "code_file": "chatgpt-vibe-coding-3xgpu-models-cv-0-9178.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "model_sources": []
+}

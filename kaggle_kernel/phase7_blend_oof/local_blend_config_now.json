@@ -1,0 +1,27 @@
+{
+  "seed": 42,
+  "corr_threshold": 0.9995,
+  "n_trials": 300,
+  "models": [
+    {
+      "name": "phase5_xgb_advanced_v1",
+      "oof_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase5_xgb_advanced/output_v1/oof_predictions.csv",
+      "submission_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase5_xgb_advanced/output_v1/submission.csv"
+    },
+    {
+      "name": "phase3_ridge_xgb_v1",
+      "oof_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase3_ridge_xgb_v1/output_v1/oof_predictions.csv",
+      "submission_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase3_ridge_xgb_v1/output_v1/submission.csv"
+    },
+    {
+      "name": "phase2_fe_v1",
+      "oof_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase2_fe_v1/output_v1/oof_predictions.csv",
+      "submission_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase2_fe_v1/output_v1/submission.csv"
+    },
+    {
+      "name": "phase1_pl_th999_v1",
+      "oof_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase1_pl_sweep/output_th999_v1/oof_predictions.csv",
+      "submission_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase1_pl_sweep/output_th999_v1/submission.csv"
+    }
+  ]
+}

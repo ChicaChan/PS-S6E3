@@ -1,0 +1,21 @@
+{
+  "id": "nina2025/ps-s6e3-hb15",
+  "id_no": 112426146,
+  "title": "PS-s6e3 | hb15",
+  "code_file": "ps-s6e3-hb15.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [
+    "nina2025/ps-s6e3-10"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "model_sources": []
+}

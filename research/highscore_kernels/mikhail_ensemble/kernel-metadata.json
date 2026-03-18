@@ -1,0 +1,22 @@
+{
+  "id": "mikhailnaumov/customer-churn-ensemble",
+  "id_no": 110965790,
+  "title": "Customer Churn | Ensemble",
+  "code_file": "customer-churn-ensemble.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [
+    "",
+    "cdeotte/s6e3-original-dataset"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "model_sources": []
+}

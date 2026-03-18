@@ -1,0 +1,22 @@
+{
+  "seed": 42,
+  "corr_threshold": 0.995,
+  "n_trials": 4000,
+  "models": [
+    {
+      "name": "phase5_xgb_advanced",
+      "oof_path": "/kaggle/input/notebooks/chicachan/ps-s6e3-xgb-advanced-v1/oof_predictions.csv",
+      "submission_path": "/kaggle/input/notebooks/chicachan/ps-s6e3-xgb-advanced-v1/submission.csv"
+    },
+    {
+      "name": "phase6_lgbm",
+      "oof_path": "/kaggle/input/notebooks/chicachan/ps-s6e3-diverse-tree-v1/oof_lgbm.csv",
+      "submission_path": "/kaggle/input/notebooks/chicachan/ps-s6e3-diverse-tree-v1/submission_lgbm.csv"
+    },
+    {
+      "name": "phase6_cat",
+      "oof_path": "/kaggle/input/notebooks/chicachan/ps-s6e3-diverse-tree-v1/oof_cat.csv",
+      "submission_path": "/kaggle/input/notebooks/chicachan/ps-s6e3-diverse-tree-v1/submission_cat.csv"
+    }
+  ]
+}

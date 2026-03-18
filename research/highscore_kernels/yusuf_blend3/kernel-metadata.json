@@ -1,0 +1,26 @@
+{
+  "id": "yusufmurtaza01/s6e3-blend-3",
+  "id_no": 112254602,
+  "title": "S6e3 | blend 3",
+  "code_file": "s6e3-blend-3.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [],
+  "kernel_sources": [
+    "yusufmurtaza01/s6e3-training",
+    "dmahajanbe23/customer-churn-blend-0-91691",
+    "yusufmurtaza01/s6e3-xgb",
+    "yusufmurtaza01/s6e3-blending",
+    "anthonytherrien/predict-customer-churn-blend",
+    "yusufmurtaza01/s6e3-blend-2"
+  ],
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "model_sources": []
+}

@@ -1,0 +1,26 @@
+{
+  "id": "artemevstafyev/cv-auc-0-91930-xgb-cb-blend",
+  "id_no": 111266576,
+  "title": "CV AUC 0.91930 XGB&CB + Blend",
+  "code_file": "cv-auc-0-91930-xgb-cb-blend.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [
+    "",
+    "blastchar/telco-customer-churn"
+  ],
+  "kernel_sources": [
+    "",
+    "anthonytherrien/predict-customer-churn-blend",
+    "artemevstafyev/cv-auc-0-91930-xgb-cb-blend"
+  ],
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "model_sources": []
+}

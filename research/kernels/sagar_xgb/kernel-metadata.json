@@ -1,0 +1,28 @@
+{
+  "id": "datasciencegrad/s6e3-detail-eda-baseline-xgb-auc-0-91808",
+  "id_no": 110955674,
+  "title": "S6E3 | Detail EDA + Baseline : XGB | AUC: 0.91808",
+  "code_file": "s6e3-detail-eda-baseline-xgb-auc-0-91808.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "exploratory data analysis",
+    "xgboost",
+    "catboost",
+    "lightgbm",
+    "ensembling",
+    "gpu"
+  ],
+  "dataset_sources": [
+    ""
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "model_sources": []
+}

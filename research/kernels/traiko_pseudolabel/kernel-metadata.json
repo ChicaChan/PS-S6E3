@@ -1,0 +1,23 @@
+{
+  "id": "include4eto/single-xgb-cudf-pseudo-labels-cv-0-91789",
+  "id_no": 110953637,
+  "title": "Single XGB, cuDF + Pseudo Labels, CV: 0.91789",
+  "code_file": "single-xgb-cudf-pseudo-labels-cv-0-91789.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    ""
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "model_sources": []
+}

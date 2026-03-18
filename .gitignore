@@ -1,9 +1,43 @@
+# OS / Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
+
+# Artifacts
 .artifacts/
-playground-series-s6e3.zip
+*.log
+*.tmp
+*.bak
+
+# Kaggle outputs
+**/output_*/
+**/output_v*/
+**/output_now/
+**/output_v1_running/
+kaggle_kernel/**/output*/
+kaggle_kernel/**/oof_*.csv
+kaggle_kernel/**/submission*.csv
+kaggle_kernel/**/cv_metrics*.json
+kaggle_kernel/**/phase*/oof_predictions.csv
+kaggle_kernel/**/phase*/submission.csv
+kaggle_kernel/**/phase*/cv_metrics.json
+kaggle_kernel/**/th*/oof_predictions.csv
+kaggle_kernel/**/th*/submission.csv
+kaggle_kernel/**/th*/cv_metrics.json
+
+# Local datasets / large files
 train.csv
 test.csv
 sample_submission.csv
-kernels_*.csv
-research/
+playground-series-s6e3.zip
+kernels_score.csv
+kernels_vote.csv
+*.pbix
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/

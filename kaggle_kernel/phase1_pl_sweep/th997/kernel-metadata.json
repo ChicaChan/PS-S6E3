@@ -1,0 +1,13 @@
+{
+  "id": "chicachan/ps-s6e3-pl-th997-v1",
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "is_private": "true",
+  "enable_internet": "false",
+  "title": "PS-S6E3 PL TH997 V1",
+  "language": "python",
+  "kernel_type": "script",
+  "code_file": "train_baseline_xgb_te.py",
+  "enable_gpu": "true"
+}

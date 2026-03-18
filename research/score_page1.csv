@@ -1,0 +1,202 @@
+ref,title,author,lastRunTime,totalVotes
+
+anthonytherrien/predict-customer-churn-blend, Predict Customer Churn | Blend,AnthonyTherrien,2026-03-18 01:03:23,30
+
+yusufmurtaza01/s6e3-blend-2,S6e3 | blend 2,Yusuf Murtaza 01,2026-03-17 15:31:55.447000,13
+
+nina2025/ps-s6e3-hb15,PS-s6e3 | hb15,F.A.Nina,2026-03-17 03:03:48.263000,34
+
+nina2025/ps-s6e3-hb14,PS-s6e3 | hb14,F.A.Nina,2026-03-17 05:58:01.753000,12
+
+jirapatjoon/jirapatruengsri837,jirapatRuengsri837,JirapatJoon,2026-03-17 06:15:55.007000,1
+
+yusufmurtaza01/s6e3-blending,s6e3 | blending,Yusuf Murtaza 01,2026-03-16 16:59:26.657000,14
+
+nina2025/ps-s6e3-hb13,PS-s6e3 | hb13,F.A.Nina,2026-03-16 06:56:18.947000,17
+
+nina2025/ps-s6e3-hb10,PS-s6e3 | hb10,F.A.Nina,2026-03-16 05:32:20,19
+
+artemevstafyev/cv-auc-0-91930-xgb-cb-blend,CV AUC 0.91930 XGB&CB + Blend,Artem,2026-03-12 17:55:52.803000,63
+
+dmahajanbe23/customer-churn-blend-0-91691,Customer Churn|Blend|0.91691,divye.mahajan,2026-03-14 22:28:08.173000,30
+
+rhythmghai/stacked-ensemble-for-customer-churn-prediction,Stacked Ensemble for Customer Churn Prediction,PinkPixelAI,2026-03-14 17:18:17.567000,6
+
+sigmaborov/ps-s6e3-xgboost-feature-engineering-baseline,PS S6E3 | XGBoost + Feature Engineering Baseline,sigmaborov,2026-03-11 09:52:52.513000,27
+
+nina2025/ps-s6e3-hb12,PS-s6e3 | hb12,F.A.Nina,2026-03-16 05:32:46,10
+
+yusufmurtaza01/s6e3-blend-3,S6e3 | blend 3,Yusuf Murtaza 01,2026-03-17 16:44:08,10
+
+ravi20076/playgrounds6e3-public-baseline-v1,PlaygroundS6E3|Public|Baseline|V1,Ravi Ramakrishnan,2026-03-08 16:41:42,38
+
+wguesdon/ps6e3-automated-public-ensemble,PS6E3 Automated Public Ensemble,Will,2026-03-17 23:32:23.407000,23
+
+nina2025/ps-s6e3-hb11,PS-s6e3 | hb11,F.A.Nina,2026-03-16 05:32:32.613000,7
+
+sehaj1104/playground-s6e3-5-notebook-rank-ensemble,Playground S6E3 – 5 Notebook Rank Ensemble,Mansehaj Preet,2026-03-09 17:16:36.227000,12
+
+jaclyndeem/churn-fork-2-ridge-xgb-ngram-cv0-919,Churn Fork 2 - Ridge XGB Ngram CV0.919,Quadruped,2026-03-15 07:36:03.983000,1
+
+blamerx/s6e3-ridge-xgb-n-gram-0-91927-cv,S6E3🥇|Ridge → XGB + N-gram|0.91927 CV,BlamerX,2026-03-14 16:20:27,74
+
+manasi197/s6e3-bi-gram-tri-gram-te-features,S6E3 : Bi-gram + Tri-gram TE features,Manasi Pandit,2026-03-14 12:55:26.747000,4
+
+blamerx/s6e3-tabm-advanced-features-0-91898-cv,S6E3⭐|TabM + Advanced Features|0.91898 CV ,BlamerX,2026-03-14 16:39:05.503000,20
+
+emanuellcs/predict-customer-churn-xgboost,Predict Customer Churn | XGBoost,Emanuel Lázaro,2026-03-18 02:45:51.537000,41
+
+itsyoursumit/predict-customer-churn-6-03,Predict Customer Churn | 6.03,Sumit Pandey,2026-03-18 04:52:04.173000,3
+
+lightningv08/cv-auc-0-91927-xgboost-bi-tri-target-encoding,CV AUC: 0.91927🔥 XGBoost + Bi/Tri Target Encoding,Vladislav Lavrentev,2026-03-07 15:43:16.767000,13
+
+jaclyndeem/churn-xgb-bitri-91927-fork,churn-xgb-bitri-91927-fork,Quadruped,2026-03-12 22:55:33,2
+
+meenalsinha/predict-customer-churn,Predict Customer Churn,Meenal Sinha,2026-03-07 08:43:29.223000,21
+
+mikhailnaumov/customer-churn-ensemble,Customer Churn | Ensemble,Mikhail Naumov,2026-03-17 15:32:26.323000,36
+
+ozermehmet/original-data-fe-single-xgb-cv-0-919-lb-0-916,Original Data FE + Single XGB[CV 0.919 | LB 0.916],Mehmet Özer,2026-03-11 12:36:28,10
+
+blamerx/s6e3-0-91906-optimized-lightgbm,S6E3⚡ | 0.91906 🧩 Optimized LightGBM,BlamerX,2026-03-09 05:26:54.643000,26
+
+yekenot/ps-s6-e3-realmlp-pytabkit,PS|S6|E3: RealMLP · PyTabKit,Vladimir Demidov,2026-03-16 09:59:52.337000,54
+
+azzamradman/0326-blend-the-blender,0326 Blend the Blender,DataRegressor,2026-03-06 21:42:01,12
+
+dmahajanbe23/customer-churn-diverse-rank-blend-0-91656,Customer Churn | Diverse Rank Blend | 0.91656,divye.mahajan,2026-03-06 17:41:19.647000,23
+
+badalkrsharma/rank-blend-cv-0-91865-xgb-lgb-cat,Rank Blend  CV :0.91865|XGB+LGB+Cat|,Badal kr. Sharma,2026-03-06 13:53:10.867000,44
+
+artemevstafyev/detailed-eda-blend,Detailed EDA + Blend,Artem,2026-03-03 22:32:49.603000,47
+
+rupankarmajumdar/s6e3-predict-customer-churn-model-blending,S6E3 Predict Customer Churn - Model Blending,Rupankar Majumdar,2026-03-03 20:24:33.553000,1
+
+blamerx/s6e3-0-91902-optimized-catboost,S6E3🚀| 0.91902  🧩 Optimized CatBoost,BlamerX,2026-03-09 05:23:53,20
+
+yusufmurtaza01/s6e3-xgb,S6e3 | XGB,Yusuf Murtaza 01,2026-03-15 05:52:41.683000,3
+
+include4eto/realmlp-feature-engineering,RealMLP - Feature Engineering,Traiko Dinev,2026-03-10 22:28:06,8
+
+badalkrsharma/cv-0-91680-xgb-lgb-multi-seed-ensemble,CV-0.91680  XGB+LGB Multi-Seed Ensemble,Badal kr. Sharma,2026-03-08 07:44:39.963000,61
+
+sdeogade/customer-churn,Customer Churn 🪙,SDeogade,2026-03-16 16:36:43,29
+
+ssssws/cv-0-91689-xgb-lgb-multi-seed-ensemble,CV-0.91689  XGB+LGB Multi-Seed Ensemble,Thanh Nhan Nguyen,2026-03-15 09:47:09.203000,2
+
+d1ffic00lt/0-9163-catboost-lgbm-features-off-preds,0.9163 | Catboost & LGBM & features & OFF preds,Filinov Dmitry,2026-03-15 17:51:37,25
+
+sdeogade/customer-churn-ensemble,Customer Churn🪙 | Ensemble,SDeogade,2026-03-14 17:38:08.147000,31
+
+jimgruman/beloved-customers,Beloved Customers,Jim Gruman,2026-03-17 12:37:44.477000,23
+
+rawashishsin/feature-engineering-xgb-0-91847,Feature Engineering + XGB | 0.91847,AshishSinghRawat,2026-03-10 15:56:02.483000,4
+
+seungjunleeofficial/s6e3-0-91625-eda-realmlp-optuna-k-fold,S6E3 [0.91625] EDA + RealMLP + Optuna + K-Fold,Seungjun Lee,2026-03-15 09:47:50.707000,4
+
+lightningv08/s6e3-cv-0-91849-xgb-kfold-fe-pl,S6E3 | CV: 0.91849 | XGB KFold | FE | PL,Vladislav Lavrentev,2026-03-02 06:02:58,23
+
+kacchanwriting/20260310-churn-v7,20260310_Churn_v7,Ikki Katsuyama,2026-03-10 09:14:30.627000,8
+
+lightningv08/s6e3-cv-0-91831-fast-xgb-kfold-fe,S6E3 | CV: 0.91831 | Fast XGB KFold | FE,Vladislav Lavrentev,2026-03-03 13:39:14.247000,8
+
+lightningv08/s6e3-cv-0-91842-xgb-kfold-pseudo-labeling,S6E3 | CV: 0.91842 | XGB KFold | Pseudo Labeling,Vladislav Lavrentev,2026-03-02 04:41:30.693000,17
+
+yusufmurtaza01/s6e3-training,s6e3 | Training ,Yusuf Murtaza 01,2026-03-14 11:46:45,15
+
+eric15342335/s6e3-fork-xgb-kfold-fe-pl,S6E3 | Fork | XGB KFold | FE | PL,eric15342335,2026-03-04 08:33:27.617000,1
+
+datasciencegrad/s6e3-detail-eda-baseline-xgb-auc-0-91808,S6E3 | Detail EDA + Baseline : XGB | AUC: 0.91808,Sagar Nagpure,2026-03-01 05:22:28.653000,100
+
+mdyusufmurtaza/s6e3-lgbm-0-91610,S6e3 | LGBM 0.91610, MD YUSUF MURTAZA,2026-03-17 23:41:50.183000,1
+
+include4eto/single-xgb-cudf-pseudo-labels-cv-0-91789,"Single XGB, cuDF + Pseudo Labels, CV: 0.91789",Traiko Dinev,2026-03-02 10:43:35.337000,57
+
+suhanigupta04/playground-series-s6e3,Playground Series | S6E3,Suhani Gupta_04,2026-03-03 07:22:47.737000,7
+
+rohaniyerdev/lb-916-predict-customer-churn-with-xgboost,[LB .916] Predict Customer Churn with XGBoost,Rohan Iyer,2026-03-10 17:04:32.797000,3
+
+include4eto/tabm-pseudo-labels,TabM + Pseudo Labels,Traiko Dinev,2026-03-03 18:58:50,5
+
+nishu65/complete-optimized-churn-prediction,COMPLETE_OPTIMIZED_CHURN_PREDICTION,Nishuxf,2026-03-10 11:04:45.467000,2
+
+cdeotte/bartz-starter-cv-0-9164-with-hill-climbing-demo,Bartz Starter [CV 0.9164] with Hill Climbing Demo,Chris Deotte,2026-03-12 02:02:59.937000,40
+
+tsunamazda/predicting-customer-churn-with-xgb-using-polars,Predicting Customer Churn with xgb using Polars,Tsuna Mazda,2026-03-12 08:38:06.953000,16
+
+yusufmurtaza01/s6e3-lgbm,S6e3 | LGBM,Yusuf Murtaza 01,2026-03-17 04:32:30.427000,3
+
+rohanrathod02/customer-churn-xgb-lgbm-catboost-ensemble,Customer Churn | XGB + LGBM + CatBoost | Ensemble,Rohan Rathod,2026-03-10 12:12:31.827000,64
+
+azzamradman/xgb-decaying-learning-rate-boost-guaranteed,XGB - Decaying Learning Rate | Boost Guaranteed,DataRegressor,2026-03-05 22:24:50,20
+
+rohanrathod02/churn-prediction-lightgbm-eda-wait-loading,Churn Prediction | LightGBM | EDA | Wait Loading ,Rohan Rathod,2026-03-15 03:48:36.273000,52
+
+jaclyndeem/churn-ensemble-xgb-lgbm-cat,Churn Ensemble XGB LGBM Cat,Quadruped,2026-03-15 06:25:26.927000,1
+
+sehaj1104/xgb-predict-customer-churn-bestest,XGB Predict Customer Churn BESTEST,Mansehaj Preet,2026-03-06 05:22:05.437000,17
+
+nalgirayergn/xgb-predict-customer-churn-cv-0-91819,XGB - Predict Customer Churn - CV: 0.91819,Ünal Giray Ergün,2026-03-05 14:42:18,30
+
+eric15342335/xgb-predict-customer-churn,XGB - Predict Customer Churn,eric15342335,2026-03-06 05:05:50.673000,4
+
+manasi197/s6e3-hybrid-ensemble-advanced-fe,S6E3: Hybrid Ensemble: Advanced FE,Manasi Pandit,2026-03-15 08:10:36.627000,38
+
+rommelsharma/customer-churn-high-bin-low-depth-tree,Customer Churn-High-Bin Low-Depth Tree,Rommel Sharma,2026-03-06 08:23:33,8
+
+rohaniyerdev/customer-churn-xgboost-with-optuna,[Customer Churn] XGBoost with Optuna,Rohan Iyer,2026-03-09 16:41:29.543000,4
+
+ravi20076/playgrounds6e3-public-baseline-v2,PlaygroundS6E3|Public|Baseline|V2,Ravi Ramakrishnan,2026-03-01 12:43:43.573000,10
+
+yusufmurtaza01/s6e3-cb,S6e3 | CB,Yusuf Murtaza 01,2026-03-17 11:35:11,2
+
+adwaittagalpallewar/churn-prediction-optuna-digit-decomposition,Churn Prediction | Optuna | Digit_Decomposition,Adwait Tagalpallewar,2026-03-07 11:34:48.203000,9
+
+eric15342335/chatgpt-vibe-coding-3xgpu-models-cv-0-9178,ChatGPT Vibe Coding - 3xGPU Models - CV 0.9178,eric15342335,2026-03-04 06:57:45,8
+
+gopikrishnan2005/s6e3-eda-shap,S6E3 || EDA+SHAP,Gopi Krishnan R,2026-03-01 16:21:56.787000,13
+
+cdeotte/gnn-starter-cv-0-9155-with-hill-climbing-demo,GNN Starter [CV 0.9155] with Hill Climbing Demo,Chris Deotte,2026-03-09 19:24:32,80
+
+emanuellcs/predict-customer-churn-lgbm-xgb-catboost,Predict Customer Churn | LGBM + XGB + CatBoost,Emanuel Lázaro,2026-03-18 02:58:25.717000,32
+
+sarcasmos/predict-customer-churn-season-6-episode,Predict Customer Churn - Season 6 Episode,Sheikh Abdul Rehman,2026-03-01 12:39:49.687000,74
+
+justcode1/customer,customer,Just Code,2026-03-07 08:50:12,16
+
+nirmalpatel02/eda-lightgbm-cvensemble,EDA | LightGBM | CVEnsemble,Nirmal Patel,2026-03-10 15:04:20,27
+
+tsunamazda/predict-customer-churn-single-lightgbm,Predict Customer Churn | Single LightGBM,Tsuna Mazda,2026-03-07 14:45:53,25
+
+eric15342335/autogluon-cpu-s6e3,AutoGluon CPU s6e3,eric15342335,2026-03-06 05:28:02.727000,6
+
+cdeotte/chatgpt-vibe-coding-3xgpu-models-cv-0-9178,ChatGPT Vibe Coding - 3xGPU Models - [CV 0.9178],Chris Deotte,2026-03-02 07:56:13,83
+
+theallkeeeymist/customer-churn,Customer-Churn,Sudhanshu,2026-03-17 04:57:37,22
+
+sehaj1104/xgb-predict-customer-churn-best,XGB - Predict Customer Churn BEST,Mansehaj Preet,2026-03-04 07:41:13.837000,21
+
+include4eto/tabtransfomer-chatgpt-vibe-coding,TabTransfomer: ChatGPT Vibe-Coding,Traiko Dinev,2026-03-16 17:16:23.913000,26
+
+gauravduttaiiitb/s6e3-flaml-roc-auc-weighted,S6E3 : FLAML : roc_auc_weighted,Gaurav Dutta,2026-03-01 07:31:34.863000,5
+
+gauravduttaiiitb/s6e3-flaml-roc-auc,S6E3 : FLAML : roc_auc,Gaurav Dutta,2026-03-01 07:45:52.857000,4
+
+gauravduttaiiitb/s6e3-flaml-log-loss,S6E3 : FLAML : log_loss,Gaurav Dutta,2026-03-01 07:47:21,4
+
+gauravduttaiiitb/s6e3-flaml-accuracy,S6E3 : FLAML : accuracy,Gaurav Dutta,2026-03-01 07:48:26,4
+
+gauravduttaiiitb/s6e3-flaml-ap,S6E3 : FLAML : ap,Gaurav Dutta,2026-03-01 07:29:47,4
+
+majjjvinaykumar/notebook617b4bd766,notebook617b4bd766,MAJJJ VINAY KUMAR,2026-03-06 11:14:15.043000,7
+
+seungjunleeofficial/s6e3-eda-feature-eng-trees-optuna-tuning-ensemble,"S6E3|EDA,Feature Eng,Trees Optuna Tuning, Ensemble",Seungjun Lee,2026-03-09 13:23:26.007000,5
+
+gabewinterrowd/ps-s6-e3-catboost-w-feature-engineering,PS|S6|E3: CatBoost w/ Feature Engineering,Gabe Winterrowd,2026-03-11 16:22:41,0
+
+seungjunleeofficial/eda-feature-engineering-xgb-catboost-lightgbm,EDA + Feature Engineering | XGB+CatBoost+LightGBM,Seungjun Lee,2026-03-11 23:20:16,2
+
+emircansoftware/churn-prediction-ensemble,Churn Prediction | Ensemble,Emircan Güneş,2026-03-15 20:37:06.607000,28
+
+kodaifukuda0311/churn-prediction-19-131features-lgbm-0-91506,Churn Prediction | 19->131Features+LGBM | 0.91506,Kodai Fukuda,2026-03-18 04:24:01,0
+

@@ -75,3 +75,38 @@ python src/remote/blend_rank_average.py \
 ## 5) 调优建议
 
 查看 `docs/optimization_roadmap.md`，按 P1 -> P2 -> P3 逐步推进。
+
+## 6) 新增冲分脚本（Phase-5/6/7）
+
+```bash
+# Phase-5: XGB Advanced
+python kaggle_kernel/phase5_xgb_advanced/train_xgb_advanced.py \
+  --train-path /kaggle/input/competitions/playground-series-s6e3/train.csv \
+  --test-path /kaggle/input/competitions/playground-series-s6e3/test.csv \
+  --sample-submission-path /kaggle/input/competitions/playground-series-s6e3/sample_submission.csv \
+  --config-path kaggle_kernel/phase5_xgb_advanced/config_xgb_advanced.json \
+  --output-dir /kaggle/working/phase5/output_v1
+
+# Phase-6: Diverse Tree (LGBM + CatBoost)
+python kaggle_kernel/phase6_diverse_tree/train_lgbm_cat_diverse.py \
+  --train-path /kaggle/input/competitions/playground-series-s6e3/train.csv \
+  --test-path /kaggle/input/competitions/playground-series-s6e3/test.csv \
+  --sample-submission-path /kaggle/input/competitions/playground-series-s6e3/sample_submission.csv \
+  --config-path kaggle_kernel/phase6_diverse_tree/config_diverse_tree.json \
+  --output-dir /kaggle/working/phase6/output_v1
+
+# Phase-7: OOF constrained blending
+python kaggle_kernel/phase7_blend_oof/blend_rank_oof_search.py \
+  --config-path kaggle_kernel/phase7_blend_oof/blend_config.json \
+  --sample-submission-path /kaggle/input/competitions/playground-series-s6e3/sample_submission.csv \
+  --output-dir /kaggle/working/phase7/output_v1
+```
+
+本地快速链路测试：
+
+```bash
+python scripts/smoke/smoke_phase5_phase6.py \
+  --train-path train.csv \
+  --test-path test.csv \
+  --sample-submission-path sample_submission.csv
+```

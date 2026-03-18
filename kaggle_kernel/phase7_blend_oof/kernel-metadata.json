@@ -1,0 +1,17 @@
+{
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "kernel_sources": [
+    "chicachan/ps-s6e3-xgb-advanced-v1",
+    "chicachan/ps-s6e3-diverse-tree-v1"
+  ],
+  "code_file": "blend_rank_oof_search.py",
+  "language": "python",
+  "title": "PS-S6E3 Blend OOF Search V1",
+  "is_private": "true",
+  "kernel_type": "script",
+  "enable_gpu": "false",
+  "enable_internet": "false",
+  "id": "chicachan/ps-s6e3-blend-oof-v1"
+}
