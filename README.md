@@ -4,6 +4,20 @@
 - 远程训练在 Kaggle 执行
 - 本地只做最小 smoke test 和文件校验
 
+## 当前状态
+
+- 当前最佳 Public LB：`0.91606`
+- 最佳提交：`phase9 realmlp low-weight blend v1`
+- 最佳提交文件：`kaggle_kernel/phase7_blend_oof/output_phase9_realmlp_candidates/submission_blend_opt.csv`
+- 最强单模：`phase8 catboost strong v1` -> `0.91591`
+- 当前最佳融合核心：`phase8_cat + phase6_cat + phase6_lgbm + phase3 + phase2 + low-weight RealMLP`
+
+推荐优先阅读：
+
+- `docs/competition_paper.md`
+- `docs/competition_research.md`
+- `docs/optimization_roadmap.md`
+
 ## 目录结构
 
 ```

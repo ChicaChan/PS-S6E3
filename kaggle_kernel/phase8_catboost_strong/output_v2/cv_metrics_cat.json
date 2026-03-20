@@ -1,0 +1,81 @@
+{
+  "model": "catboost_strong",
+  "overall_auc": 0.9181652829639224,
+  "fold_aucs": [
+    0.9179509741442202,
+    0.9188370738632532,
+    0.9180002183585708,
+    0.9195276199244464,
+    0.9165708426909474
+  ],
+  "folds": [
+    {
+      "fold": 1,
+      "fold_auc": 0.9179509741442202,
+      "n_te_cols": 40,
+      "n_cat_features": 41
+    },
+    {
+      "fold": 2,
+      "fold_auc": 0.9188370738632532,
+      "n_te_cols": 40,
+      "n_cat_features": 41
+    },
+    {
+      "fold": 3,
+      "fold_auc": 0.9180002183585708,
+      "n_te_cols": 40,
+      "n_cat_features": 41
+    },
+    {
+      "fold": 4,
+      "fold_auc": 0.9195276199244464,
+      "n_te_cols": 40,
+      "n_cat_features": 41
+    },
+    {
+      "fold": 5,
+      "fold_auc": 0.9165708426909474,
+      "n_te_cols": 40,
+      "n_cat_features": 41
+    }
+  ],
+  "auc_mean": 0.9181773457962876,
+  "auc_std": 0.0009921644848548982,
+  "n_features_total": 119,
+  "n_numeric_features": 78,
+  "n_categorical_features": 41,
+  "created_orig_signals": {
+    "orig_single": 41,
+    "orig_cross": 15,
+    "dist": 8
+  },
+  "config": {
+    "n_folds": 5,
+    "inner_folds": 5,
+    "max_te_categories": 4000,
+    "orig_single_mode": "all_categorical",
+    "enable_orig_cross": true,
+    "enable_pctrank_orig": true,
+    "enable_pctrank_churn_gap": true,
+    "conditional_rank_group_cols": [
+      "InternetService",
+      "Contract"
+    ],
+    "conditional_rank_value_col": "TotalCharges",
+    "cat_params": {
+      "loss_function": "Logloss",
+      "eval_metric": "AUC",
+      "learning_rate": 0.03,
+      "depth": 6,
+      "l2_leaf_reg": 3.0,
+      "n_estimators": 14000,
+      "random_seed": 42,
+      "verbose": 0,
+      "task_type": "GPU",
+      "use_best_model": true,
+      "od_type": "Iter",
+      "od_wait": 300
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "dataset_sources": [
+    "blastchar/telco-customer-churn",
+    "cdeotte/s6e3-original-dataset"
+  ],
+  "code_file": "train_realmlp_tabm_diverse.py",
+  "language": "python",
+  "title": "PS-S6E3 RealMLP TabM Diverse V1",
+  "is_private": "true",
+  "kernel_type": "script",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "id": "chicachan/ps-s6e3-realmlp-tabm-diverse-v1"
+}

@@ -1,0 +1,14 @@
+{
+  "models": [
+    "cat"
+  ],
+  "ensemble_auc": 0.9181652829639224,
+  "feature_count": 119,
+  "n_train_rows": 594194,
+  "n_test_rows": 254655,
+  "created_orig_signals": {
+    "orig_single": 41,
+    "orig_cross": 15,
+    "dist": 8
+  }
+}

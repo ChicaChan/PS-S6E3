@@ -1,0 +1,32 @@
+{
+  "seed": 42,
+  "corr_threshold": 0.999,
+  "n_trials": 600,
+  "models": [
+    {
+      "name": "phase8_cat_v1",
+      "oof_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase8_catboost_strong/output_v2/oof_cat.csv",
+      "submission_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase8_catboost_strong/output_v2/submission_cat.csv"
+    },
+    {
+      "name": "phase6_cat_v1",
+      "oof_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase6_diverse_tree/output_v1/oof_cat.csv",
+      "submission_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase6_diverse_tree/output_v1/submission_cat.csv"
+    },
+    {
+      "name": "phase6_lgbm_v1",
+      "oof_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase6_diverse_tree/output_v1/oof_lgbm.csv",
+      "submission_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase6_diverse_tree/output_v1/submission_lgbm.csv"
+    },
+    {
+      "name": "phase2_fe_v1",
+      "oof_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase2_fe_v1/output_v1/oof_predictions.csv",
+      "submission_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase2_fe_v1/output_v1/submission.csv"
+    },
+    {
+      "name": "phase3_ridge_xgb_v1",
+      "oof_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase3_ridge_xgb_v1/output_v1/oof_predictions.csv",
+      "submission_path": "D:/workplace/kaggle/PS-S6E3/kaggle_kernel/phase3_ridge_xgb_v1/output_v1/submission.csv"
+    }
+  ]
+}
