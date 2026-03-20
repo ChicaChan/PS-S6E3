@@ -1,0 +1,441 @@
+table train
+	lineageTag: 8f140ec7-6491-4472-b503-9a07c66c6069
+
+	measure 客户总数 = COUNTROWS(train)
+		formatString: 0
+		lineageTag: b80a82eb-5f66-4c67-ae13-68513c7302d1
+
+	measure 流失客户数 = CALCULATE(COUNTROWS(train), train[Churn] = "Yes")
+		formatString: 0
+		lineageTag: c8783c73-18d9-4aea-94c8-4f1682a822f6
+
+	measure 流失率 = DIVIDE([流失客户数], [客户总数], 0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: a2b6be45-a155-4e2c-bfe3-9eca3d7cda15
+
+	measure 总体流失率 = CALCULATE([流失率], ALL(train))
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: cb8a5aed-e98d-4840-83f2-6b0bf6185a48
+
+	measure 相对总体流失差 = [流失率] - [总体流失率]
+		formatString: +0.00%;-0.00%;0.00%
+		lineageTag: 8ac31545-96f2-40fc-b2f9-5e12209002ff
+
+	measure 客户占比 = DIVIDE([客户总数], CALCULATE([客户总数], ALL(train)), 0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 46a2401a-4b21-40eb-8cfa-3af462d6e4a8
+
+	measure 风险收入 = CALCULATE(SUM(train[MonthlyCharges]), train[Churn] = "Yes")
+		formatString: "¥"#,0.00;"¥"-#,0.00;"¥"#,0.00
+		lineageTag: e30b492f-7351-4942-b1f4-c2eb7acfb7db
+
+		annotation PBI_FormatHint = {"currencyCulture":"zh-CN"}
+
+	measure 流失用户平均在网时长 = CALCULATE(AVERAGE(train[tenure]), train[Churn] = "Yes")
+		lineageTag: 3c887e4a-9e9b-4b0a-8a6c-421fd5748b46
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 058e92b5-6cd7-4626-a754-9dd3da05b670
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column gender
+		dataType: string
+		lineageTag: f99abc4b-d330-4de7-bd2d-6de83a12f296
+		summarizeBy: none
+		sourceColumn: gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column SeniorCitizen
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d93e602b-a3ee-4d3c-a29e-0f0e86ddd1c9
+		summarizeBy: sum
+		sourceColumn: SeniorCitizen
+
+		annotation SummarizationSetBy = Automatic
+
+	column Partner
+		dataType: string
+		isHidden
+		lineageTag: 1b25d810-18f6-4164-aed5-d4bfab02a718
+		summarizeBy: none
+		sourceColumn: Partner
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dependents
+		dataType: string
+		isHidden
+		lineageTag: fe80be79-16ea-4e51-977b-0ed2c7283a56
+		summarizeBy: none
+		sourceColumn: Dependents
+
+		annotation SummarizationSetBy = Automatic
+
+	column tenure
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 42dde5d4-d47d-4640-9da5-dd8f1ed9a470
+		summarizeBy: sum
+		sourceColumn: tenure
+
+		annotation SummarizationSetBy = Automatic
+
+	column PhoneService
+		dataType: string
+		lineageTag: 0cb0767d-fe22-4e70-93a2-7a3ee7dd0e0d
+		summarizeBy: none
+		sourceColumn: PhoneService
+
+		annotation SummarizationSetBy = Automatic
+
+	column MultipleLines
+		dataType: string
+		lineageTag: 16ace094-6d24-401e-a5ed-4f9fbefd4e8b
+		summarizeBy: none
+		sourceColumn: MultipleLines
+
+		annotation SummarizationSetBy = Automatic
+
+	column InternetService
+		dataType: string
+		isHidden
+		lineageTag: 9d798ac2-d5e7-40b4-83f7-5a2f20fe265f
+		summarizeBy: none
+		sourceColumn: InternetService
+
+		annotation SummarizationSetBy = Automatic
+
+	column OnlineSecurity
+		dataType: string
+		isHidden
+		lineageTag: 71b07449-fbbc-4492-99df-94272da97d00
+		summarizeBy: none
+		sourceColumn: OnlineSecurity
+
+		annotation SummarizationSetBy = Automatic
+
+	column OnlineBackup
+		dataType: string
+		lineageTag: e57e07d0-b429-42dc-b0dc-7ea6ef9286a6
+		summarizeBy: none
+		sourceColumn: OnlineBackup
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeviceProtection
+		dataType: string
+		lineageTag: 73a0ccd8-0ffa-493d-83ec-33d69a6bfdbf
+		summarizeBy: none
+		sourceColumn: DeviceProtection
+
+		annotation SummarizationSetBy = Automatic
+
+	column TechSupport
+		dataType: string
+		isHidden
+		lineageTag: 31bff1d8-a3ab-4946-8586-b6a4aa21b325
+		summarizeBy: none
+		sourceColumn: TechSupport
+
+		annotation SummarizationSetBy = Automatic
+
+	column StreamingTV
+		dataType: string
+		lineageTag: 6c22c6b9-f623-4cd7-8805-7e273508c74c
+		summarizeBy: none
+		sourceColumn: StreamingTV
+
+		annotation SummarizationSetBy = Automatic
+
+	column StreamingMovies
+		dataType: string
+		lineageTag: 8928ed99-53fe-4f7e-ae3c-7d956362c338
+		summarizeBy: none
+		sourceColumn: StreamingMovies
+
+		annotation SummarizationSetBy = Automatic
+
+	column Contract
+		dataType: string
+		isHidden
+		lineageTag: 1a02f05f-16d4-4fa9-8102-bfae66e8acee
+		summarizeBy: none
+		sourceColumn: Contract
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaperlessBilling
+		dataType: string
+		isHidden
+		lineageTag: d571f934-ff96-4f7a-ae2b-21dd57fbbdd2
+		summarizeBy: none
+		sourceColumn: PaperlessBilling
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentMethod
+		dataType: string
+		isHidden
+		lineageTag: 551d0855-d168-467b-88d5-322a3bdc37ad
+		summarizeBy: none
+		sourceColumn: PaymentMethod
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthlyCharges
+		dataType: decimal
+		isHidden
+		lineageTag: 75f458fa-1d54-4a28-9945-22bf2450271e
+		summarizeBy: sum
+		sourceColumn: MonthlyCharges
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalCharges
+		dataType: decimal
+		isHidden
+		lineageTag: 35ed665a-c5c5-4ccc-9e33-c0f2d6148cf4
+		summarizeBy: sum
+		sourceColumn: TotalCharges
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Churn
+		dataType: string
+		isHidden
+		lineageTag: 0e90da68-af7d-433c-9647-bed3d0f2dcb4
+		summarizeBy: none
+		sourceColumn: Churn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 月费区间 = ```
+			
+			  SWITCH(
+			      TRUE(),
+			      train[MonthlyCharges] <= 30, "01 30以下",
+			      train[MonthlyCharges] <= 50, "02 31-50",
+			      train[MonthlyCharges] <= 70, "03 51-70",
+			      train[MonthlyCharges] <= 90, "04 71-90",
+			      train[MonthlyCharges] <= 110, "05 91-110",
+			      "06 110以上"
+			  )
+			```
+		lineageTag: ad0a7372-f0ea-42a1-983a-fc4339cde52f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 总费用区间 = ```
+			
+			  SWITCH(
+			      TRUE(),
+			      train[TotalCharges] <= 1000, "01 1千以下",
+			      train[TotalCharges] <= 2000, "02 1千-2千",
+			      train[TotalCharges] <= 3000, "03 2千-3千",
+			      train[TotalCharges] <= 4000, "04 3千-4千",
+			      train[TotalCharges] <= 6000, "05 4千-6千",
+			      "06 6千以上"
+			  )
+			```
+		lineageTag: 27725e2b-6a88-4a82-824f-95d8f49c192a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 老年用户标签 = IF(train[SeniorCitizen] = 1, "老年用户", "非老年用户")
+		lineageTag: abe46554-5b22-4179-9521-dfe9373fdff5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 在网阶段 = ```
+			
+			  SWITCH(
+			      TRUE(),
+			      train[tenure] <= 6, "01 0-6个月",
+			      train[tenure] <= 12, "02 7-12个月",
+			      train[tenure] <= 24, "03 13-24个月",
+			      train[tenure] <= 48, "04 25-48个月",
+			      "05 49-72个月"
+			  )
+			```
+		lineageTag: eaa9f2b8-3f19-485c-85f6-23d0fa1d5c11
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 服务打包数 = ```
+			
+			  VAR ServiceCount =
+			      IF(train[PhoneService] = "Yes", 1, 0) +
+			      IF(train[MultipleLines] = "Yes", 1, 0) +
+			      IF(train[OnlineSecurity] = "Yes", 1, 0) +
+			      IF(train[OnlineBackup] = "Yes", 1, 0) +
+			      IF(train[DeviceProtection] = "Yes", 1, 0) +
+			      IF(train[TechSupport] = "Yes", 1, 0) +
+			      IF(train[StreamingTV] = "Yes", 1, 0) +
+			      IF(train[StreamingMovies] = "Yes", 1, 0)
+			  RETURN
+			      SWITCH(
+			          TRUE(),
+			          ServiceCount <= 1, "01 0-1项服务",
+			          ServiceCount <= 3, "02 2-3项服务",
+			          ServiceCount <= 5, "03 4-5项服务",
+			          "04 6-8项服务"
+			      )
+			```
+		lineageTag: 05418a6a-ca08-4d3b-9ded-74c2f281439d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 防护画像 = ```
+			
+			  SWITCH(
+			      TRUE(),
+			      train[InternetService] = "No", "00 无网络服务",
+			      train[OnlineSecurity] = "Yes" && train[TechSupport] = "Yes", "01 完整防护",
+			      train[OnlineSecurity] = "Yes" || train[TechSupport] = "Yes", "02 部分防护",
+			      "03 缺少防护"
+			  )
+			```
+		lineageTag: 3b25c2e1-8fdf-4efc-8732-a7f0510949f3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 家庭画像 = ```
+			
+			  SWITCH(
+			      TRUE(),
+			      train[Partner] = "No" && train[Dependents] = "No", "01 单身",
+			      train[Partner] = "Yes" && train[Dependents] = "No", "02 二人世界",
+			      train[Partner] = "Yes" && train[Dependents] = "Yes", "03 家庭型",
+			      "04 单身带家属"
+			  )
+			```
+		lineageTag: 5bff1506-a1e8-48bc-ab7a-b4e23355dec3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 流失标签 = IF(train[Churn] = "Yes", "流失", "留存")
+		lineageTag: 2690f64f-6d24-40d6-a66f-3bb7faac328e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 合同类型标签 = ```
+			
+			  SWITCH(
+			      train[Contract],
+			      "Month-to-month", "月付",
+			      "One year", "一年合约",
+			      "Two year", "两年合约",
+			      train[Contract]
+			  )
+			```
+		lineageTag: d06878c2-ab98-4d51-97e2-6e7e4ad6853d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 网络服务标签 = ```
+			
+			  SWITCH(
+			      train[InternetService],
+			      "Fiber optic", "光纤",
+			      "DSL", "DSL",
+			      "No", "无网络服务",
+			      train[InternetService]
+			  )
+			```
+		lineageTag: 032d2815-5f39-449b-8c43-656775915e80
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 支付方式标签 = ```
+			
+			  SWITCH(
+			      train[PaymentMethod],
+			      "Electronic check", "电子支票",
+			      "Mailed check", "邮寄支票",
+			      "Bank transfer (automatic)", "银行自动转账",
+			      "Credit card (automatic)", "信用卡自动扣款",
+			      train[PaymentMethod]
+			  )
+			```
+		lineageTag: 32224dd8-4702-420b-ba6e-13b2a997c77e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 在线安全标签 = ```
+			
+			  SWITCH(
+			      train[OnlineSecurity],
+			      "Yes", "已开通",
+			      "No", "未开通",
+			      "No internet service", "无网络服务",
+			      train[OnlineSecurity]
+			  )
+			```
+		lineageTag: df8a6219-9a3f-487e-8de7-8b5fc53e0bb9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 技术支持标签 = ```
+			
+			  SWITCH(
+			      train[TechSupport],
+			      "Yes", "已开通",
+			      "No", "未开通",
+			      "No internet service", "无网络服务",
+			      train[TechSupport]
+			  )
+			```
+		lineageTag: 871f4e4c-6823-49d2-b0d6-d5d541af8e1e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 无纸化账单标签 = IF(train[PaperlessBilling] = "Yes", "是", "否")
+		lineageTag: 8d95769d-da3f-493a-8d54-42ee407b01d3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition train = m
+		mode: import
+		source =
+				let
+				    源 = Csv.Document(File.Contents("D:\workplace\kaggle\PS-S6E3\train.csv"),[Delimiter=",", Columns=21, Encoding=936, QuoteStyle=QuoteStyle.None]),
+				    提升的标题 = Table.PromoteHeaders(源, [PromoteAllScalars=true]),
+				    更改的类型 = Table.TransformColumnTypes(提升的标题,{{"id", Int64.Type}, {"gender", type text}, {"SeniorCitizen", Int64.Type}, {"Partner", type text}, {"Dependents", type text}, {"tenure", Int64.Type}, {"PhoneService", type text}, {"MultipleLines", type text}, {"InternetService", type text}, {"OnlineSecurity", type text}, {"OnlineBackup", type text}, {"DeviceProtection", type text}, {"TechSupport", type text}, {"StreamingTV", type text}, {"StreamingMovies", type text}, {"Contract", type text}, {"PaperlessBilling", type text}, {"PaymentMethod", type text}, {"MonthlyCharges", type number}, {"TotalCharges", type number}, {"Churn", type text}})
+				in
+				    更改的类型
+
+	annotation PBI_ResultType = Table
+

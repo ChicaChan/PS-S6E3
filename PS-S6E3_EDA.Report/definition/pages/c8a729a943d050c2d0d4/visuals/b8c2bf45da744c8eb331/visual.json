@@ -1,0 +1,89 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "b8c2bf45da744c8eb331",
+  "position": {
+    "x": 580,
+    "y": 40,
+    "z": 2000,
+    "height": 230,
+    "width": 300,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "funnel",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "防护画像"
+                }
+              },
+              "queryRef": "train.防护画像",
+              "nativeQueryRef": "防护画像",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "客户占比"
+                }
+              },
+              "queryRef": "train.客户占比",
+              "nativeQueryRef": "客户占比"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "train"
+                  }
+                },
+                "Property": "防护画像"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'防护画像客户占比'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

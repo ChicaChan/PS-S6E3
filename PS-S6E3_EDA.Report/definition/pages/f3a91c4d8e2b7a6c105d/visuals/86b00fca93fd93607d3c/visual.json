@@ -1,0 +1,88 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "86b00fca93fd93607d3c",
+  "position": {
+    "x": 30,
+    "y": 40,
+    "z": 1000,
+    "height": 250,
+    "width": 300,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "pieChart",
+    "query": {
+      "queryState": {
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "家庭画像"
+                }
+              },
+              "queryRef": "train.家庭画像",
+              "nativeQueryRef": "家庭画像"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "客户总数"
+                }
+              },
+              "queryRef": "train.客户总数",
+              "nativeQueryRef": "客户总数"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "train"
+                  }
+                },
+                "Property": "客户总数"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'家庭画像占比'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

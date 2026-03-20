@@ -1,0 +1,107 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "3b4d25dc51026d678368",
+  "position": {
+    "x": 810,
+    "y": 40,
+    "z": 3000,
+    "height": 250,
+    "width": 410,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "hundredPercentStackedColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "无纸化账单标签"
+                }
+              },
+              "queryRef": "train.无纸化账单标签",
+              "nativeQueryRef": "无纸化账单标签",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "流失标签"
+                }
+              },
+              "queryRef": "train.流失标签",
+              "nativeQueryRef": "流失标签"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "客户总数"
+                }
+              },
+              "queryRef": "train.客户总数",
+              "nativeQueryRef": "客户总数"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "train"
+                  }
+                },
+                "Property": "无纸化账单标签"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'无纸化账单流失构成'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

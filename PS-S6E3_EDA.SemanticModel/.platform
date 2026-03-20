@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "PS-S6E3_EDA"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0dbaf500-1158-4823-bf49-7709adf92d78"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "f3a91c4d8e2b7a6c105d",
+  "displayName": "家庭与账单",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

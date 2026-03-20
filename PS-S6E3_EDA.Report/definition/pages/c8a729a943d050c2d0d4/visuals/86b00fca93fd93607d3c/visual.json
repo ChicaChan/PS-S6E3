@@ -1,0 +1,107 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "86b00fca93fd93607d3c",
+  "position": {
+    "x": 30,
+    "y": 40,
+    "z": 1000,
+    "height": 230,
+    "width": 520,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "hundredPercentStackedBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "网络服务标签"
+                }
+              },
+              "queryRef": "train.网络服务标签",
+              "nativeQueryRef": "网络服务标签",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "流失标签"
+                }
+              },
+              "queryRef": "train.流失标签",
+              "nativeQueryRef": "流失标签"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "客户总数"
+                }
+              },
+              "queryRef": "train.客户总数",
+              "nativeQueryRef": "客户总数"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "train"
+                  }
+                },
+                "Property": "网络服务标签"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'网络服务与流失构成'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

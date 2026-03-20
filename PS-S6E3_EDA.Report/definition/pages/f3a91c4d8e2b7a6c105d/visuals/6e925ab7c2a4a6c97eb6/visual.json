@@ -1,0 +1,89 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "6e925ab7c2a4a6c97eb6",
+  "position": {
+    "x": 650,
+    "y": 340,
+    "z": 5000,
+    "height": 250,
+    "width": 420,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "waterfallChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "支付方式标签"
+                }
+              },
+              "queryRef": "train.支付方式标签",
+              "nativeQueryRef": "支付方式标签",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "相对总体流失差"
+                }
+              },
+              "queryRef": "train.相对总体流失差",
+              "nativeQueryRef": "相对总体流失差"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "train"
+                  }
+                },
+                "Property": "相对总体流失差"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'支付方式相对流失差'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

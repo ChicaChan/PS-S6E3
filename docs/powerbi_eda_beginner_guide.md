@@ -2,7 +2,13 @@
 
 目标：用 `train.csv` 做出 3 页 EDA 看板，并保存为 `PS-S6E3_EDA.pbix`。
 
-参考计划文件： [ps-s6e3_powerbi_eda_dashboard.md](../.zcf/plan/current/ps-s6e3_powerbi_eda_dashboard.md)
+参考归档计划文件：
+- [简单EDA](D:/workplace/kaggle/PS-S6E3/.zcf/plan/history/2026-03-19_103723_简单EDA.md)
+- [EDA优化](D:/workplace/kaggle/PS-S6E3/.zcf/plan/history/2026-03-20_170559_EDA优化.md)
+
+版本管理建议：
+- Git 仓库优先跟踪 `PS-S6E3_EDA_Optimized.pbip`、`PS-S6E3_EDA.Report/`、`PS-S6E3_EDA.SemanticModel/`
+- `PBIX` 更适合作为最终打开与分发文件，不作为主要源码管理载体
 
 ## 1. 导入数据
 

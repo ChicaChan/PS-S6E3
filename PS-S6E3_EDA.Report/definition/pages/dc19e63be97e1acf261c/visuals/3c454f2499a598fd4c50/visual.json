@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "3c454f2499a598fd4c50",
+  "position": {
+    "x": 930,
+    "y": 20,
+    "z": 4000,
+    "height": 120,
+    "width": 280,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "流失用户平均在网时长"
+                }
+              },
+              "queryRef": "train.流失用户平均在网时长",
+              "nativeQueryRef": "流失用户平均在网时长"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'流失用户平均在网时长'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

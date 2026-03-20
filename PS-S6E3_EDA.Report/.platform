@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "PS-S6E3_EDA"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "22bef77f-9392-43dd-acfd-1f82a5f302fd"
+  }
+}

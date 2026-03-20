@@ -1,0 +1,18 @@
+model Model
+	culture: zh-CN
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: zh-CN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["train"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table train
+
+ref cultureInfo zh-CN
+

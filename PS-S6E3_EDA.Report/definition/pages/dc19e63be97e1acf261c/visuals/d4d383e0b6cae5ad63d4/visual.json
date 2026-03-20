@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "d4d383e0b6cae5ad63d4",
+  "position": {
+    "x": 630,
+    "y": 20,
+    "z": 3000,
+    "height": 120,
+    "width": 280,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "train"
+                    }
+                  },
+                  "Property": "风险收入"
+                }
+              },
+              "queryRef": "train.风险收入",
+              "nativeQueryRef": "风险收入"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'风险收入'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
