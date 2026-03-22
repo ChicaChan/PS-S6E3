@@ -1,0 +1,41 @@
+{
+  "seed": 42,
+  "id_col": "id",
+  "target_col": "Churn",
+  "inputs": {
+    "reference_blend": {
+      "name": "phase9_blend_best_v1",
+      "oof_path": "../../kaggle_kernel/phase7_blend_oof/output_phase9_realmlp_candidates/oof_blend_opt.csv",
+      "submission_path": "../../kaggle_kernel/phase7_blend_oof/output_phase9_realmlp_candidates/submission_blend_opt.csv"
+    },
+    "stack_best": {
+      "name": "phase10_stack_best_v1",
+      "oof_path": "../../kaggle_kernel/phase10_stack_oof/output_v4/phase10_stack_v1/oof_stack_best.csv",
+      "submission_path": "../../kaggle_kernel/phase10_stack_oof/output_v4/phase10_stack_v1/submission_stack_best.csv"
+    }
+  },
+  "blend_spaces": [
+    "prob",
+    "rank"
+  ],
+  "stack_weights": [
+    0.0,
+    0.05,
+    0.1,
+    0.12,
+    0.14,
+    0.16,
+    0.17,
+    0.18,
+    0.19,
+    0.2,
+    0.21,
+    0.22,
+    0.24,
+    0.26,
+    0.28,
+    0.3,
+    0.35,
+    1.0
+  ]
+}

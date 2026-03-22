@@ -122,3 +122,24 @@
    - 修复动作:
      - 已给 `phase5_xgb_advanced/kernel-metadata.json` 增加 `dataset_sources`（`blastchar/telco-customer-churn`, `cdeotte/s6e3-original-dataset`）
      - 已推送 `phase5` v2，当前状态：`QUEUED`（等待运行）
+
+### 2026-03-22T04:53:06+0800
+
+9. Phase-10 Stack OOF v1（已完成）
+   - Kernel: `chicachan/ps-s6e3-stack-oof-v1`
+   - Artifact:
+     - `kaggle_kernel/phase10_stack_oof/output_v4/phase10_stack_v1/stack_report.json`
+     - `kaggle_kernel/phase10_stack_oof/output_v4/phase10_stack_v1/candidate_summary.json`
+     - `kaggle_kernel/phase10_stack_oof/output_v4/phase10_stack_v1/submission_stack_best.csv`
+   - Best Candidate:
+     - `candidate_set=all_core`
+     - `feature_mode=raw_rank_logit`
+     - `meta_model=logreg_l2_c0p25`
+   - OOF:
+     - reference blend: `0.9184677453`
+     - stack best: `0.9184538058`
+   - Public LB:
+     - `phase10 stack oof v1` -> `0.91608`
+   - 结论:
+     - 虽然 OOF 未超过参考 blend，但 Public LB 从 `0.91606` 提升到 `0.91608`
+     - stacking 当前已验证具备真实线上增益，后续应优先沿 `stack + blend hybrid` 小步搜索，而不是继续扩大模型池

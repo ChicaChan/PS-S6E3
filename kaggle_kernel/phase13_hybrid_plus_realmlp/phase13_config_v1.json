@@ -1,0 +1,94 @@
+{
+  "seed": 42,
+  "id_col": "id",
+  "target_col": "Churn",
+  "inputs": {
+    "base_hybrid": {
+      "name": "phase12_rank_hybrid_best_v1",
+      "oof_path": "../../kaggle_kernel/phase12_rank_hybrid/output_v2/phase12_rank_hybrid_v1/oof_hybrid_best.csv",
+      "submission_path": "../../kaggle_kernel/phase12_rank_hybrid/output_v2/phase12_rank_hybrid_v1/submission_hybrid_best.csv"
+    },
+    "realmlp": {
+      "name": "phase9_realmlp_v2",
+      "oof_path": "../../kaggle_kernel/phase9_realmlp_tabm_diverse/output_v2/oof_realmlp.csv",
+      "submission_path": "../../kaggle_kernel/phase9_realmlp_tabm_diverse/output_v2/submission_realmlp.csv"
+    }
+  },
+  "candidates": [
+    {
+      "name": "rank_realmlp0.0050",
+      "blend_space": "rank",
+      "realmlp_weight": 0.005
+    },
+    {
+      "name": "rank_realmlp0.0075",
+      "blend_space": "rank",
+      "realmlp_weight": 0.0075
+    },
+    {
+      "name": "rank_realmlp0.0100",
+      "blend_space": "rank",
+      "realmlp_weight": 0.01
+    },
+    {
+      "name": "rank_realmlp0.0125",
+      "blend_space": "rank",
+      "realmlp_weight": 0.0125
+    },
+    {
+      "name": "rank_realmlp0.0150",
+      "blend_space": "rank",
+      "realmlp_weight": 0.015
+    },
+    {
+      "name": "rank_realmlp0.0175",
+      "blend_space": "rank",
+      "realmlp_weight": 0.0175
+    },
+    {
+      "name": "rank_realmlp0.0200",
+      "blend_space": "rank",
+      "realmlp_weight": 0.02
+    },
+    {
+      "name": "rank_realmlp0.0225",
+      "blend_space": "rank",
+      "realmlp_weight": 0.0225
+    },
+    {
+      "name": "rank_realmlp0.0250",
+      "blend_space": "rank",
+      "realmlp_weight": 0.025
+    },
+    {
+      "name": "rank_realmlp0.0275",
+      "blend_space": "rank",
+      "realmlp_weight": 0.0275
+    },
+    {
+      "name": "rank_realmlp0.0300",
+      "blend_space": "rank",
+      "realmlp_weight": 0.03
+    },
+    {
+      "name": "prob_realmlp0.0050",
+      "blend_space": "prob",
+      "realmlp_weight": 0.005
+    },
+    {
+      "name": "prob_realmlp0.0100",
+      "blend_space": "prob",
+      "realmlp_weight": 0.01
+    },
+    {
+      "name": "prob_realmlp0.0150",
+      "blend_space": "prob",
+      "realmlp_weight": 0.015
+    },
+    {
+      "name": "prob_realmlp0.0200",
+      "blend_space": "prob",
+      "realmlp_weight": 0.02
+    }
+  ]
+}

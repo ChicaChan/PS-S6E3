@@ -1,0 +1,13 @@
+{
+  "dataset_sources": [
+    "chicachan/ps-s6e3-phase11-hybrid-inputs"
+  ],
+  "code_file": "hybrid_search.py",
+  "language": "python",
+  "title": "PS-S6E3 Rank Hybrid V1",
+  "is_private": "true",
+  "kernel_type": "script",
+  "enable_gpu": "false",
+  "enable_internet": "false",
+  "id": "chicachan/ps-s6e3-rank-hybrid-v1"
+}

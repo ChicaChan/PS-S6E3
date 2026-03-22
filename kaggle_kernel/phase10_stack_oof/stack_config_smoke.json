@@ -1,0 +1,56 @@
+{
+  "seed": 42,
+  "id_col": "id",
+  "target_col": "Churn",
+  "n_meta_folds": 3,
+  "min_models": 2,
+  "allow_missing_models": false,
+  "models": [
+    {
+      "name": "phase8_cat_v1",
+      "oof_path": "../phase8_catboost_strong/output_v2/oof_cat.csv",
+      "submission_path": "../phase8_catboost_strong/output_v2/submission_cat.csv"
+    },
+    {
+      "name": "phase9_realmlp_v2",
+      "oof_path": "../phase9_realmlp_tabm_diverse/output_v2/oof_realmlp.csv",
+      "submission_path": "../phase9_realmlp_tabm_diverse/output_v2/submission_realmlp.csv"
+    }
+  ],
+  "reference_blend": {
+    "name": "phase9_blend_best_v1",
+    "oof_path": "../phase7_blend_oof/output_phase9_realmlp_candidates/oof_blend_opt.csv",
+    "submission_path": "../phase7_blend_oof/output_phase9_realmlp_candidates/submission_blend_opt.csv"
+  },
+  "candidate_sets": [
+    {
+      "name": "available_core",
+      "models": [
+        "phase8_cat_v1",
+        "phase9_realmlp_v2"
+      ]
+    }
+  ],
+  "feature_modes": [
+    "raw",
+    "raw_rank"
+  ],
+  "meta_models": [
+    {
+      "name": "logreg_l2_c1",
+      "type": "logreg",
+      "params": {
+        "C": 1.0,
+        "max_iter": 1000,
+        "solver": "lbfgs"
+      }
+    },
+    {
+      "name": "ridge_a1",
+      "type": "ridge",
+      "params": {
+        "alpha": 1.0
+      }
+    }
+  ]
+}

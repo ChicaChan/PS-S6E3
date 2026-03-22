@@ -1,0 +1,94 @@
+{
+  "seed": 42,
+  "id_col": "id",
+  "target_col": "Churn",
+  "inputs": {
+    "reference_blend": {
+      "name": "phase9_blend_best_v1",
+      "oof_path": "../../kaggle_kernel/phase7_blend_oof/output_phase9_realmlp_candidates/oof_blend_opt.csv",
+      "submission_path": "../../kaggle_kernel/phase7_blend_oof/output_phase9_realmlp_candidates/submission_blend_opt.csv"
+    },
+    "stack_best": {
+      "name": "phase10_stack_best_v1",
+      "oof_path": "../../kaggle_kernel/phase10_stack_oof/output_v4/phase10_stack_v1/oof_stack_best.csv",
+      "submission_path": "../../kaggle_kernel/phase10_stack_oof/output_v4/phase10_stack_v1/submission_stack_best.csv"
+    }
+  },
+  "candidates": [
+    {
+      "name": "rank_stack0.155",
+      "blend_space": "rank",
+      "stack_weight": 0.155
+    },
+    {
+      "name": "rank_stack0.160",
+      "blend_space": "rank",
+      "stack_weight": 0.16
+    },
+    {
+      "name": "rank_stack0.1625",
+      "blend_space": "rank",
+      "stack_weight": 0.1625
+    },
+    {
+      "name": "rank_stack0.165",
+      "blend_space": "rank",
+      "stack_weight": 0.165
+    },
+    {
+      "name": "rank_stack0.1675",
+      "blend_space": "rank",
+      "stack_weight": 0.1675
+    },
+    {
+      "name": "rank_stack0.170",
+      "blend_space": "rank",
+      "stack_weight": 0.17
+    },
+    {
+      "name": "rank_stack0.1725",
+      "blend_space": "rank",
+      "stack_weight": 0.1725
+    },
+    {
+      "name": "rank_stack0.175",
+      "blend_space": "rank",
+      "stack_weight": 0.175
+    },
+    {
+      "name": "rank_stack0.1775",
+      "blend_space": "rank",
+      "stack_weight": 0.1775
+    },
+    {
+      "name": "rank_stack0.180",
+      "blend_space": "rank",
+      "stack_weight": 0.18
+    },
+    {
+      "name": "rank_stack0.1825",
+      "blend_space": "rank",
+      "stack_weight": 0.1825
+    },
+    {
+      "name": "rank_stack0.185",
+      "blend_space": "rank",
+      "stack_weight": 0.185
+    },
+    {
+      "name": "rank_stack0.190",
+      "blend_space": "rank",
+      "stack_weight": 0.19
+    },
+    {
+      "name": "rank_stack0.195",
+      "blend_space": "rank",
+      "stack_weight": 0.195
+    },
+    {
+      "name": "rank_stack0.200",
+      "blend_space": "rank",
+      "stack_weight": 0.2
+    }
+  ]
+}

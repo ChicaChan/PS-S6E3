@@ -1,0 +1,120 @@
+{
+  "seed": 42,
+  "id_col": "id",
+  "target_col": "Churn",
+  "n_meta_folds": 5,
+  "min_models": 2,
+  "allow_missing_models": false,
+  "models": [
+    {
+      "name": "phase8_cat_v1",
+      "oof_path": "../phase8_catboost_strong/output_v2/oof_cat.csv",
+      "submission_path": "../phase8_catboost_strong/output_v2/submission_cat.csv"
+    },
+    {
+      "name": "phase6_cat_v1",
+      "oof_path": "../phase6_diverse_tree/output_v1/oof_cat.csv",
+      "submission_path": "../phase6_diverse_tree/output_v1/submission_cat.csv"
+    },
+    {
+      "name": "phase6_lgbm_v1",
+      "oof_path": "../phase6_diverse_tree/output_v1/oof_lgbm.csv",
+      "submission_path": "../phase6_diverse_tree/output_v1/submission_lgbm.csv"
+    },
+    {
+      "name": "phase2_fe_v1",
+      "oof_path": "../phase2_fe_v1/output_v1/oof_predictions.csv",
+      "submission_path": "../phase2_fe_v1/output_v1/submission.csv"
+    },
+    {
+      "name": "phase3_ridge_xgb_v1",
+      "oof_path": "../phase3_ridge_xgb_v1/output_v1/oof_predictions.csv",
+      "submission_path": "../phase3_ridge_xgb_v1/output_v1/submission.csv"
+    },
+    {
+      "name": "phase9_realmlp_v2",
+      "oof_path": "../phase9_realmlp_tabm_diverse/output_v2/oof_realmlp.csv",
+      "submission_path": "../phase9_realmlp_tabm_diverse/output_v2/submission_realmlp.csv"
+    }
+  ],
+  "reference_blend": {
+    "name": "phase9_blend_best_v1",
+    "oof_path": "../phase7_blend_oof/output_phase9_realmlp_candidates/oof_blend_opt.csv",
+    "submission_path": "../phase7_blend_oof/output_phase9_realmlp_candidates/submission_blend_opt.csv"
+  },
+  "candidate_sets": [
+    {
+      "name": "all_core",
+      "models": [
+        "phase8_cat_v1",
+        "phase6_cat_v1",
+        "phase6_lgbm_v1",
+        "phase2_fe_v1",
+        "phase3_ridge_xgb_v1",
+        "phase9_realmlp_v2"
+      ]
+    },
+    {
+      "name": "drop_realmlp",
+      "models": [
+        "phase8_cat_v1",
+        "phase6_cat_v1",
+        "phase6_lgbm_v1",
+        "phase2_fe_v1",
+        "phase3_ridge_xgb_v1"
+      ]
+    },
+    {
+      "name": "tree_plus_diversity",
+      "models": [
+        "phase8_cat_v1",
+        "phase6_cat_v1",
+        "phase6_lgbm_v1",
+        "phase9_realmlp_v2"
+      ]
+    }
+  ],
+  "feature_modes": [
+    "raw",
+    "raw_rank",
+    "raw_rank_logit"
+  ],
+  "meta_models": [
+    {
+      "name": "logreg_l2_c1",
+      "type": "logreg",
+      "params": {
+        "C": 1.0,
+        "max_iter": 1000,
+        "solver": "lbfgs"
+      }
+    },
+    {
+      "name": "logreg_l2_c0p25",
+      "type": "logreg",
+      "params": {
+        "C": 0.25,
+        "max_iter": 1000,
+        "solver": "lbfgs"
+      }
+    },
+    {
+      "name": "ridge_a1",
+      "type": "ridge",
+      "params": {
+        "alpha": 1.0
+      }
+    },
+    {
+      "name": "xgb_meta_v1",
+      "type": "xgb",
+      "params": {
+        "n_estimators": 500,
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "subsample": 0.9,
+        "colsample_bytree": 0.9
+      }
+    }
+  ]
+}

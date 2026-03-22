@@ -1,0 +1,166 @@
+{
+  "run_name": "phase14_stronger_stack_pipeline_v2",
+  "seed": 42,
+  "id_col": "id",
+  "target_col": "Churn",
+  "n_meta_folds": 5,
+  "min_models": 3,
+  "allow_missing_models": false,
+  "anchor_model_name": "phase13_hybrid_best_v1",
+  "reference_model_name": "phase13_hybrid_best_v1",
+  "models": [
+    {
+      "name": "phase13_hybrid_best_v1",
+      "oof_path": "../phase13_hybrid_plus_realmlp/output_v1/phase13_hybrid_plus_realmlp_v1/oof_phase13_best.csv",
+      "submission_path": "../phase13_hybrid_plus_realmlp/output_v1/phase13_hybrid_plus_realmlp_v1/submission_phase13_best.csv"
+    },
+    {
+      "name": "phase10_stack_best_v1",
+      "oof_path": "../phase10_stack_oof/output_v4/phase10_stack_v1/oof_stack_best.csv",
+      "submission_path": "../phase10_stack_oof/output_v4/phase10_stack_v1/submission_stack_best.csv"
+    },
+    {
+      "name": "phase7_blend_best_v1",
+      "oof_path": "../phase7_blend_oof/output_phase9_realmlp_candidates/oof_blend_opt.csv",
+      "submission_path": "../phase7_blend_oof/output_phase9_realmlp_candidates/submission_blend_opt.csv"
+    },
+    {
+      "name": "phase8_cat_v1",
+      "oof_path": "../phase8_catboost_strong/output_v2/oof_cat.csv",
+      "submission_path": "../phase8_catboost_strong/output_v2/submission_cat.csv"
+    },
+    {
+      "name": "phase9_realmlp_v2",
+      "oof_path": "../phase9_realmlp_tabm_diverse/output_v2/oof_realmlp.csv",
+      "submission_path": "../phase9_realmlp_tabm_diverse/output_v2/submission_realmlp.csv"
+    }
+  ],
+  "candidate_sets": [
+    {
+      "name": "stack_plus_diversity",
+      "models": [
+        "phase13_hybrid_best_v1",
+        "phase10_stack_best_v1",
+        "phase9_realmlp_v2"
+      ]
+    }
+  ],
+  "feature_packs": [
+    {
+      "name": "full_linear",
+      "blocks": [
+        "raw",
+        "rank",
+        "logit",
+        "raw_stats",
+        "rank_stats",
+        "raw_anchor_gaps",
+        "raw_anchor_abs_gaps",
+        "rank_anchor_gaps",
+        "logit_anchor_gaps",
+        "pairwise_raw_absdiff",
+        "pairwise_rank_absdiff"
+      ]
+    },
+    {
+      "name": "full_linear_no_rank_pairwise",
+      "blocks": [
+        "raw",
+        "rank",
+        "logit",
+        "raw_stats",
+        "rank_stats",
+        "raw_anchor_gaps",
+        "raw_anchor_abs_gaps",
+        "rank_anchor_gaps",
+        "logit_anchor_gaps",
+        "pairwise_raw_absdiff"
+      ]
+    },
+    {
+      "name": "full_linear_no_logit_anchor",
+      "blocks": [
+        "raw",
+        "rank",
+        "logit",
+        "raw_stats",
+        "rank_stats",
+        "raw_anchor_gaps",
+        "raw_anchor_abs_gaps",
+        "rank_anchor_gaps",
+        "pairwise_raw_absdiff",
+        "pairwise_rank_absdiff"
+      ]
+    },
+    {
+      "name": "anchor_compact",
+      "blocks": [
+        "raw",
+        "rank",
+        "logit",
+        "raw_stats",
+        "rank_stats",
+        "raw_anchor_gaps",
+        "raw_anchor_abs_gaps",
+        "rank_anchor_gaps",
+        "pairwise_raw_absdiff"
+      ]
+    }
+  ],
+  "meta_models": [
+    {
+      "name": "logreg_newtoncg_c0p15",
+      "type": "logreg",
+      "params": {
+        "C": 0.15,
+        "max_iter": 1000,
+        "solver": "newton-cg"
+      }
+    },
+    {
+      "name": "logreg_newtoncg_c0p20",
+      "type": "logreg",
+      "params": {
+        "C": 0.2,
+        "max_iter": 1000,
+        "solver": "newton-cg"
+      }
+    },
+    {
+      "name": "logreg_newtoncg_c0p25",
+      "type": "logreg",
+      "params": {
+        "C": 0.25,
+        "max_iter": 1000,
+        "solver": "newton-cg"
+      }
+    },
+    {
+      "name": "logreg_newtoncg_c0p30",
+      "type": "logreg",
+      "params": {
+        "C": 0.3,
+        "max_iter": 1000,
+        "solver": "newton-cg"
+      }
+    },
+    {
+      "name": "logreg_newtoncg_c0p35",
+      "type": "logreg",
+      "params": {
+        "C": 0.35,
+        "max_iter": 1000,
+        "solver": "newton-cg"
+      }
+    },
+    {
+      "name": "logreg_lbfgs_c0p25",
+      "type": "logreg",
+      "params": {
+        "C": 0.25,
+        "max_iter": 1000,
+        "solver": "lbfgs"
+      }
+    }
+  ]
+}

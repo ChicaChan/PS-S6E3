@@ -1,0 +1,13 @@
+{
+  "dataset_sources": [
+    "chicachan/ps-s6e3-phase14-stack-pipeline-inputs"
+  ],
+  "code_file": "stack_pipeline_search.py",
+  "language": "python",
+  "title": "PS-S6E3 Stronger Stack Pipeline V1",
+  "is_private": "true",
+  "kernel_type": "script",
+  "enable_gpu": "false",
+  "enable_internet": "false",
+  "id": "chicachan/ps-s6e3-stronger-stack-pipeline-v1"
+}

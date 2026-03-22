@@ -1,0 +1,85 @@
+{
+  "seed": 42,
+  "id_col": "id",
+  "target_col": "Churn",
+  "n_meta_folds": 3,
+  "min_models": 3,
+  "allow_missing_models": false,
+  "anchor_model_name": "phase13_hybrid_best_v1",
+  "reference_model_name": "phase13_hybrid_best_v1",
+  "models": [
+    {
+      "name": "phase13_hybrid_best_v1",
+      "oof_path": "../../.artifacts/smoke_phase14_stack_pipeline/input/phase13_oof_phase13_best.csv",
+      "submission_path": "../../.artifacts/smoke_phase14_stack_pipeline/input/phase13_submission_phase13_best.csv"
+    },
+    {
+      "name": "phase10_stack_best_v1",
+      "oof_path": "../../.artifacts/smoke_phase14_stack_pipeline/input/phase10_oof_stack_best.csv",
+      "submission_path": "../../.artifacts/smoke_phase14_stack_pipeline/input/phase10_submission_stack_best.csv"
+    },
+    {
+      "name": "phase7_blend_best_v1",
+      "oof_path": "../../.artifacts/smoke_phase14_stack_pipeline/input/phase7_oof_blend_opt.csv",
+      "submission_path": "../../.artifacts/smoke_phase14_stack_pipeline/input/phase7_submission_blend_opt.csv"
+    },
+    {
+      "name": "phase8_cat_v1",
+      "oof_path": "../../.artifacts/smoke_phase14_stack_pipeline/input/phase8_oof_cat.csv",
+      "submission_path": "../../.artifacts/smoke_phase14_stack_pipeline/input/phase8_submission_cat.csv"
+    },
+    {
+      "name": "phase9_realmlp_v2",
+      "oof_path": "../../.artifacts/smoke_phase14_stack_pipeline/input/phase9_oof_realmlp.csv",
+      "submission_path": "../../.artifacts/smoke_phase14_stack_pipeline/input/phase9_submission_realmlp.csv"
+    }
+  ],
+  "candidate_sets": [
+    {
+      "name": "all_core_smoke",
+      "models": [
+        "phase13_hybrid_best_v1",
+        "phase10_stack_best_v1",
+        "phase7_blend_best_v1",
+        "phase8_cat_v1",
+        "phase9_realmlp_v2"
+      ]
+    }
+  ],
+  "feature_packs": [
+    {
+      "name": "raw_only",
+      "blocks": ["raw"]
+    },
+    {
+      "name": "raw_rank_anchor",
+      "blocks": [
+        "raw",
+        "rank",
+        "raw_stats",
+        "rank_stats",
+        "raw_anchor_gaps",
+        "raw_anchor_abs_gaps",
+        "rank_anchor_gaps"
+      ]
+    }
+  ],
+  "meta_models": [
+    {
+      "name": "logreg_newtoncg_c0p25",
+      "type": "logreg",
+      "params": {
+        "C": 0.25,
+        "max_iter": 1000,
+        "solver": "newton-cg"
+      }
+    },
+    {
+      "name": "ridge_a0p5",
+      "type": "ridge",
+      "params": {
+        "alpha": 0.5
+      }
+    }
+  ]
+}

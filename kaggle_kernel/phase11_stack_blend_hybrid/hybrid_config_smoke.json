@@ -1,0 +1,27 @@
+{
+  "seed": 42,
+  "id_col": "id",
+  "target_col": "Churn",
+  "inputs": {
+    "reference_blend": {
+      "name": "phase9_blend_best_v1",
+      "oof_path": "../../.artifacts/smoke_phase11_hybrid/input/ref_oof_blend_opt.csv",
+      "submission_path": "../../.artifacts/smoke_phase11_hybrid/input/ref_submission_blend_opt.csv"
+    },
+    "stack_best": {
+      "name": "phase10_stack_best_v1",
+      "oof_path": "../../.artifacts/smoke_phase11_hybrid/input/phase10_oof_stack_best.csv",
+      "submission_path": "../../.artifacts/smoke_phase11_hybrid/input/phase10_submission_stack_best.csv"
+    }
+  },
+  "blend_spaces": [
+    "prob",
+    "rank"
+  ],
+  "stack_weights": [
+    0.0,
+    0.18,
+    0.2,
+    1.0
+  ]
+}
