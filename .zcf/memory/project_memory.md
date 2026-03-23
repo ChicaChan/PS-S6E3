@@ -1,225 +1,176 @@
 # PS-S6E3 Project Memory (Cross-Device Handoff)
 
-Last Updated: 2026-03-20 15:14:43 +0800
-Updated At (ISO): 2026-03-20T15:14:43+0800
+Last Updated: 2026-03-23 11:39:50 +0800
+Updated At (ISO): 2026-03-23T11:39:50+0800
 
 ## 1. Current Objective
 - Competition: `playground-series-s6e3` (Predict Customer Churn)
-- Goal: improve public LB beyond current best `0.91606`
-- Constraint: training/submission only on Kaggle remote; local only smoke/validation
+- Goal: improve public LB beyond current best `0.91608`
+- Constraint: training and submission must run on Kaggle remote; local only handles smoke tests, OOF analysis, config management, and documentation
 
 ## 2. Best Known Results
-- Historical best public LB: `0.91606`
-  - `phase9 realmlp low-weight blend v1` -> 0.91606
-  - previous bests:
-    - `phase7 phase8 candidate blend opt v1` -> 0.91602
-    - `phase8 catboost strong v1` -> 0.91591
-    - `phase7 phase6 candidate blend opt v1` -> 0.91591
-    - `phase6 catboost v1` -> 0.91581
-    - `phase4 blend eq rank` / `phase4 blend opt rank` -> 0.91407
+- Best public LB: `0.91608`
+  - submission: `phase10 stack oof v1`
+  - interpretation: first stacking route that beat the previous `phase9` blend online
+- Best local OOF: `0.9184734996`
+  - route: `phase14 stronger stack pipeline v1/v2`
+  - interpretation: strongest local second-layer pipeline, but not best on Public LB
+- Strongest single model:
+  - `phase8 catboost strong v1`
+  - OOF AUC: `0.9181653`
+  - Public LB: `0.91591`
+- Strongest pre-stack blend:
+  - `phase9 realmlp low-weight blend v1`
+  - blended OOF AUC: `0.9184601`
+  - Public LB: `0.91606`
 
-Recent submissions (latest run):
-- `phase9 realmlp low-weight blend v1` -> `0.91606` (new best)
-- `phase7 phase8 candidate blend opt v1` -> `0.91602` (new best)
-- `phase8 catboost strong v1` -> `0.91591` (ties current best)
-- `phase7 phase6 candidate blend opt v1` -> `0.91591` (new best)
+## 3. Latest Submission Ladder
+- `phase10 stack oof v1` -> `0.91608` (current best public)
+- `phase14 stronger stack pipeline v1` -> `0.91607`
+- `phase12 rank hybrid v1` -> `0.91607`
+- `phase11 stack blend hybrid v1` -> `0.91607`
+- `phase9 realmlp low-weight blend v1` -> `0.91606`
+- `phase7 phase8 candidate blend opt v1` -> `0.91602`
+- `phase8 catboost strong v1` -> `0.91591`
+- `phase7 phase6 candidate blend opt v1` -> `0.91591`
+- `phase6 catboost v1` -> `0.91581`
 - `phase6 ensemble v1` -> `0.91567`
-- `phase6 catboost v1` -> `0.91581` (new best)
-- `phase5 xgb advanced v1` -> `0.89306` (regression)
-- `phase7 blend opt now` -> `0.90109` (regression)
+- `phase5 xgb advanced v1` -> `0.89306` (dead route)
 
-## 3. Root Cause of Regression
-- `phase5 v1` ran without original Telco dataset mounted.
-- Script fallback used train as reference distribution:
-  - leads to leakage-like overfit and poor public LB generalization.
-- Fix applied: add dataset sources in
-  - `kaggle_kernel/phase5_xgb_advanced/kernel-metadata.json`
-  - datasets: `blastchar/telco-customer-churn`, `cdeotte/s6e3-original-dataset`
+## 4. Latest Route Summary
 
-## 4. Remote Runtime Status (latest checked)
-- `chicachan/ps-s6e3-xgb-advanced-v1`: `COMPLETE`
-- `chicachan/ps-s6e3-diverse-tree-v1`: `COMPLETE`
-- `chicachan/ps-s6e3-realmlp-tabm-diverse-v1`: `COMPLETE`
-- `phase7` remains a local-only blend workflow because Kaggle notebook source mounting failed in the earlier attempt.
+### 4.1 Phase10
+- Folder: `kaggle_kernel/phase10_stack_oof`
+- Purpose: build second-layer stacking on top of existing OOF/submission files
+- Best candidate:
+  - `candidate_set=all_core`
+  - `feature_mode=raw_rank_logit`
+  - `meta_model=logreg_l2_c0p25`
+- Result:
+  - reference blend OOF: `0.9184677453`
+  - stack best OOF: `0.9184538058`
+  - Public LB: `0.91608`
+- Takeaway:
+  - even though OOF was slightly lower than the best phase9 blend, stacking improved online score
+  - this is the strongest evidence that second-layer stacking is a real route, not just local overfit
 
-## 5. New Implemented Assets
-- Documentation:
-  - `docs/competition_paper.md`
-  - `.zcf/plan/history/2026-03-20_151709_ps-s6e3_round2_diversity_push.md`
-- Phase-8:
-  - `kaggle_kernel/phase8_catboost_strong/train_catboost_strong.py`
-  - `kaggle_kernel/phase8_catboost_strong/config_catboost_strong.json`
-  - `kaggle_kernel/phase8_catboost_strong/kernel-metadata.json`
-  - `scripts/smoke/smoke_phase8_catboost_strong.py`
-- Phase-9:
-  - `kaggle_kernel/phase9_realmlp_tabm_diverse/train_realmlp_tabm_diverse.py`
-  - `kaggle_kernel/phase9_realmlp_tabm_diverse/config_realmlp_tabm_diverse.json`
-  - `kaggle_kernel/phase9_realmlp_tabm_diverse/kernel-metadata.json`
-  - `scripts/smoke/smoke_phase9_realmlp_tabm_diverse.py`
-- Phase-5:
-  - `kaggle_kernel/phase5_xgb_advanced/train_xgb_advanced.py`
-  - `kaggle_kernel/phase5_xgb_advanced/config_xgb_advanced.json`
-  - `kaggle_kernel/phase5_xgb_advanced/kernel-metadata.json`
-- Phase-6:
-  - `kaggle_kernel/phase6_diverse_tree/train_lgbm_cat_diverse.py`
-  - `kaggle_kernel/phase6_diverse_tree/config_diverse_tree.json`
-  - `kaggle_kernel/phase6_diverse_tree/kernel-metadata.json`
-- Phase-7:
-  - `kaggle_kernel/phase7_blend_oof/blend_rank_oof_search.py`
-  - `kaggle_kernel/phase7_blend_oof/blend_config.json`
-  - `kaggle_kernel/phase7_blend_oof/kernel-metadata.json`
-- Local smoke:
-  - `scripts/smoke/smoke_phase5_phase6.py`
+### 4.2 Phase11 and Phase12
+- Folders:
+  - `kaggle_kernel/phase11_stack_blend_hybrid`
+  - `kaggle_kernel/phase12_rank_hybrid`
+- Purpose:
+  - do narrow hybrid search between `phase10 stack best` and `phase9 reference blend`
+- Best evidence:
+  - local best sits around `rank` space with `stack_weight ~= 0.17`
+  - local OOF rises to about `0.9184687`
+- Public LB:
+  - both routes only reached `0.91607`
+- Takeaway:
+  - hybrid route is valid
+  - but weight-only refinement is already near platform on the current model pool
 
-## 6. Key New Findings
-- `phase5_xgb_advanced/output_v2/cv_metrics.json`
-  - OOF AUC: `0.909806`
-  - log confirms original reference data was mounted
-  - conclusion: route is intrinsically weak; stop investing in phase5
-- `phase6_diverse_tree/output_v1/cv_metrics_lgbm.json`
-  - LGBM OOF AUC: `0.9158487`
-- `phase6_diverse_tree/output_v1/cv_metrics_cat.json`
-  - CatBoost OOF AUC: `0.9180636`
-- `phase6_diverse_tree/output_v1/phase6_report.json`
-  - ensemble OOF AUC: `0.9179283`
-- Local phase7 candidate search on `phase6_cat + phase6_lgbm + phase2 + phase3 + th999`
-  - config: `kaggle_kernel/phase7_blend_oof/local_blend_config_phase6_candidates.json`
-  - correlation threshold: `0.994`
-  - selected models: `phase6_cat_v1`, `phase2_fe_v1`, `phase6_lgbm_v1`
-  - best method: `prob`
-  - best OOF AUC: `0.9183020`
-  - equal-rank OOF AUC: `0.9180864`
-  - output dir: `kaggle_kernel/phase7_blend_oof/output_phase6_candidates`
-- `phase8_catboost_strong/output_v2/cv_metrics_cat.json`
-  - CatBoost Strong OOF AUC: `0.9181653`
-  - feature count: `119`
-  - created original signals:
-    - `orig_single`: `41`
-    - `orig_cross`: `15`
-    - `dist`: `8`
-  - conclusion: better than `phase6_cat`, but only by a narrow margin
-- Local phase7 candidate search on `phase8_cat + phase6_cat + phase6_lgbm + phase2 + phase3`
-  - config: `kaggle_kernel/phase7_blend_oof/local_blend_config_phase8_candidates.json`
-  - correlation threshold: `0.999`
-  - best method: `prob`
-  - best OOF AUC: `0.9183841`
-  - equal-rank OOF AUC: `0.9181751`
-  - output dir: `kaggle_kernel/phase7_blend_oof/output_phase8_candidates`
-  - note: `phase8_cat` and `phase6_cat` correlation is very high (`0.998622`), so this is still a same-family enhancement, not true diversity
-- `phase9_realmlp_tabm_diverse` scaffold is ready
-  - route: `RealMLP_TD_Classifier + TabM_D_Classifier` via `pytabkit`
-  - feature backbone reused from `phase8` strong-feature chain
-  - Kaggle kernel id:
-    - `chicachan/ps-s6e3-realmlp-tabm-diverse-v1`
-  - metadata:
-    - `enable_gpu: true`
-    - `enable_internet: true`
-  - objective:
-    - validate whether a lower-correlation neural/tabular family can improve final blend beyond `0.91602`
-  - push status:
-    - version `v2` has completed on Kaggle
-    - output files have been downloaded to:
-      - `kaggle_kernel/phase9_realmlp_tabm_diverse/output_v2`
-  - cancellation status:
-    - current local official Kaggle CLI / SDK does not expose a public cancel interface
-    - direct probe of likely internal stop endpoints returned `404`
-    - practical meaning: `v1` cannot be programmatically cancelled from the currently available local tooling
-  - local code has now been tightened into `v2` shape:
-    - `n_folds=3`
-    - `inner_folds=3`
-    - `enable_tabm=false`
-    - `RealMLP` only for the first fast diversity check
-    - explicit `n_epochs/batch_size/hidden_sizes`
-    - fold-level heartbeat logging added
-  - v2 actual result:
-    - `RealMLP` OOF AUC: `0.9147087`
-    - correlation vs `phase6_cat`: `0.980665`
-    - correlation vs `phase8_cat`: `0.980994`
-    - verdict:
-      - route is runnable and moderately diverse
-      - but model strength is not enough for direct submission
-  - low-weight blend result:
-    - best blend method used locally:
-      - inject `RealMLP` into current best phase8 candidate blend by 1-D prob grid
-    - best `RealMLP` weight:
-      - `0.124`
-    - blended OOF AUC:
-      - `0.9184601`
-    - previous best blend OOF:
-      - `0.9183841`
-    - delta:
-      - `+0.0000761`
-    - verdict:
-      - small but real positive gain
-      - this candidate is worth one leaderboard submission test
-  - leaderboard result:
-    - submission message:
-      - `phase9 realmlp low-weight blend v1`
-    - Public LB:
-      - `0.91606`
-    - final verdict:
-      - current best public solution
+### 4.3 Phase13
+- Folder: `kaggle_kernel/phase13_hybrid_plus_realmlp`
+- Purpose:
+  - add `phase9_realmlp` back as a very small low-correlation correction on top of `phase12 best`
+- Best local evidence:
+  - best mode: `rank`
+  - best `realmlp_weight ~= 0.02`
+  - local OOF around `0.9184704303`
+- Takeaway:
+  - `RealMLP` still works better as a weak auxiliary correction than as a standalone main branch
+  - no new public best was established from this route
 
-## 7. Local Validation Status
-- Smoke test passed for chain skeleton.
-- On current local machine, `lightgbm/catboost` not installed; phase6 smoke auto-skip is expected.
-- `phase8` static compile passed.
-- `phase8` smoke runner executed successfully and skipped runtime training because local `catboost` is not installed.
-- `phase9` static compile passed.
-- `phase9` smoke runner executed successfully and skipped runtime training because local `pytabkit` is not installed.
-- Submission format validated locally for:
-  - `phase6_diverse_tree/output_v1/submission_cat.csv`
-  - `phase6_diverse_tree/output_v1/submission.csv`
-  - `phase7_blend_oof/output_phase6_candidates/submission_blend_eq.csv`
-  - `phase7_blend_oof/output_phase6_candidates/submission_blend_opt.csv`
-  - `phase8_catboost_strong/output_v2/submission.csv`
-  - `phase8_catboost_strong/output_v2/submission_cat.csv`
-  - `phase7_blend_oof/output_phase8_candidates/submission_blend_opt.csv`
+### 4.4 Phase14
+- Folder: `kaggle_kernel/phase14_stronger_stack_pipeline`
+- Purpose:
+  - move from simple second-layer probability columns to a richer stacking feature pipeline
+- Inputs:
+  - `phase13_hybrid_best_v1`
+  - `phase10_stack_best_v1`
+  - `phase7_blend_best_v1`
+  - `phase8_cat_v1`
+  - `phase9_realmlp_v2`
+- Feature packs:
+  - `raw`
+  - `rank`
+  - `logit`
+  - stats features
+  - anchor-gap features
+  - pairwise absdiff features
+- Best candidate:
+  - `stack_plus_diversity + full_linear + logreg_newtoncg_c0p25`
+- Result:
+  - OOF AUC: `0.9184734996`
+  - Public LB: `0.91607`
+- Takeaway:
+  - current strongest local route
+  - but not stronger online than `phase10`
+  - the current bottleneck is likely base-model diversity, not second-layer feature engineering
 
-## 8. Resume Checklist (Next Device / Next Session)
-1. Primary submission candidate:
-   - already validated and submitted:
-   - `kaggle_kernel/phase6_diverse_tree/output_v1/submission_cat.csv`
-   - result: `0.91581`
-2. Secondary submission candidate:
-   - already validated and submitted:
-   - `kaggle_kernel/phase6_diverse_tree/output_v1/submission.csv`
-   - result: `0.91567`
-3. Blend candidate worth testing after single-model sanity check:
-   - already validated and submitted:
-   - `kaggle_kernel/phase7_blend_oof/output_phase9_realmlp_candidates/submission_blend_opt.csv`
-   - result: `0.91606`
-   - this is the current best public submission
-4. Current practical objective:
-   - keep current best blend as stable baseline
-   - next route should aim for another genuinely complementary model family or stronger second-layer stack
-   - current best submission is:
-   - `phase7_blend_oof/output_phase9_realmlp_candidates/submission_blend_opt.csv`
-5. Before any new submission, re-check recent leaderboard responses:
+## 5. Implemented Assets
+
+### 5.1 Kaggle kernels
+- `kaggle_kernel/phase10_stack_oof`
+- `kaggle_kernel/phase11_stack_blend_hybrid`
+- `kaggle_kernel/phase12_rank_hybrid`
+- `kaggle_kernel/phase13_hybrid_plus_realmlp`
+- `kaggle_kernel/phase14_stronger_stack_pipeline`
+
+### 5.2 Kaggle datasets
+- `kaggle_dataset/phase10_stack_inputs`
+- `kaggle_dataset/phase11_hybrid_inputs`
+- `kaggle_dataset/phase13_realmlp_inputs`
+- `kaggle_dataset/phase14_stack_pipeline_inputs`
+
+### 5.3 Supporting files
+- `scripts/smoke/smoke_phase10_stack_oof.py`
+- `scripts/smoke/smoke_phase11_stack_blend_hybrid.py`
+- `scripts/smoke/smoke_phase12_rank_hybrid.py`
+- `scripts/smoke/smoke_phase13_hybrid_plus_realmlp.py`
+- `scripts/smoke/smoke_phase14_stronger_stack_pipeline.py`
+
+### 5.4 Documentation
+- `docs/competition_paper.md`
+- `README.md`
+- `.zcf/plan/current/ps-s6e3_model_optimization.md`
+- `.zcf/plan/history/2026-03-22_125517_phase10_stack_oof_v1.md`
+- `.zcf/plan/history/2026-03-22_131417_phase11_stack_blend_hybrid_v1.md`
+- `.zcf/plan/history/2026-03-22_132431_phase12_rank_hybrid_v1.md`
+- `.zcf/plan/history/2026-03-22_134457_phase13_hybrid_plus_realmlp_v1.md`
+- `.zcf/plan/history/2026-03-22_195235_phase14_stronger_stack_pipeline_v1.md`
+
+## 6. Current Recommended Route
+- Keep `phase10 stack oof v1` as the current online anchor.
+- Keep `phase14 stronger stack pipeline` as the current local research framework.
+- Do not spend more rounds on pure `phase11-14` weight squeezing with the same base model pool.
+- Next high-value action:
+  - add a truly new low-correlation base model or stronger feature-enhanced branch
+  - then feed it into `phase14`
+
+## 7. Dead / Low-Value Routes
+- `phase5_xgb_advanced`
+  - fixed dataset mounting but still weak after repair
+  - do not submit again
+- standalone `phase9_realmlp_v2`
+  - useful only as a weak auxiliary blend input
+  - not strong enough as an independent primary submission
+
+## 8. Resume Checklist
+1. Read `docs/competition_paper.md` for the latest beginner-friendly full summary.
+2. Use `phase10 stack oof v1` as the default public benchmark to beat.
+3. Use `phase14 stronger stack pipeline` if a new base model needs to be tested in a stronger second layer.
+4. Before any new submission, re-check leaderboard history:
    - `kaggle competitions submissions -c playground-series-s6e3 -v`
-6. Keep avoiding:
-   - any `phase5` submission
-   - any blend dominated by `phase5` predictions
-7. Round-2 code scaffold is ready:
-   - Kaggle kernel folder: `kaggle_kernel/phase8_catboost_strong`
-   - suggested push target: `chicachan/ps-s6e3-catboost-strong-v1`
-8. New diversity scaffold is also ready:
-   - Kaggle kernel folder: `kaggle_kernel/phase9_realmlp_tabm_diverse`
-   - suggested push target: `chicachan/ps-s6e3-realmlp-tabm-diverse-v1`
-   - `v2` push and remote run already completed
-   - best next action:
-   - use `RealMLP` only as a low-weight blend candidate, not as standalone submit
-   - current best local candidate file:
-   - `kaggle_kernel/phase7_blend_oof/output_phase9_realmlp_candidates/submission_blend_opt.csv`
+5. Prefer:
+   - new diverse base models
+   - stronger original-signal feature branches
+   - cleaner OOF inputs for phase14
+6. Avoid:
+   - more phase5 work
+   - public-LB-only weight tuning on the existing phase10-14 pool
 
-## 9. Key Notes
-- Keep pseudo-label gating enabled (only accept fold-level improvement).
-- Do not submit fallback-reference models (train-as-reference) again.
-- Prefer OOF-constrained blend over public-only heuristic weighting.
-- Current highest-value route is `phase9` diversity model first, then evaluate whether it improves Track-C blend over the current `0.91602` best.
-- `phase9 v2` has now answered the diversity question:
-  - keep only as a weak auxiliary blend candidate unless later low-weight blend shows real gain
-- latest answer:
-  - low-weight blend already showed a small real gain, so this route remains alive only in ensemble form
-- latest leaderboard answer:
-  - this low-weight blend has already improved Public LB to `0.91606`
+## 9. Operational Notes
+- Local machine is still for smoke tests and documentation only.
+- Kaggle remote remains the only place for full search, training, and official submission.
+- Current repository now contains phase10-14 code, supporting Kaggle datasets, and updated handoff documents.

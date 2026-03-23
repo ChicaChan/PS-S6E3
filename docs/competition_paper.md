@@ -3,8 +3,8 @@
 ## 摘要
 
 本文面向刚接触 Kaggle 表格竞赛、二分类任务和集成学习的读者，系统总结 `Kaggle Playground Series - Season 6 Episode 3` 当前项目方案。赛题目标是根据电信客户属性预测用户是否流失，评价指标为 `ROC AUC`。  
-项目在严格工程约束下推进：所有正式训练与提交都在 Kaggle 远程环境完成，本地只做最小链路验证、OOF 分析和融合搜索。整个方案从 `XGBoost + leak-free target encoding` 基线出发，逐步扩展出原始数据迁移特征、两阶段 `Ridge -> XGBoost`、`CatBoost/LightGBM` 多样性分支，以及 OOF 约束下的受限融合。  
-截至 `2026-03-20`，当前最佳公开榜成绩为 `0.91606`，来自“强树模型主干 + 低权重新模型补丁”的六模融合。实验表明，本题持续上分的关键不是反复微调同构树模型，而是引入更可信的原始数据迁移信号、保持严格防泄漏流程，并把低相关模型以受限权重方式并入现有强融合。
+项目在严格工程约束下推进：所有正式训练与提交都在 Kaggle 远程环境完成，本地只做最小链路验证、OOF 分析和融合搜索。整个方案从 `XGBoost + leak-free target encoding` 基线出发，逐步扩展出原始数据迁移特征、两阶段 `Ridge -> XGBoost`、`CatBoost/LightGBM` 多样性分支、受限融合，以及后续的二层 `stacking / hybrid` 管线。  
+截至 `2026-03-23`，当前最佳公开榜成绩为 `0.91608`，来自 `phase10 stack oof v1`；当前最佳本地 OOF 为 `0.9184734996`，来自 `phase14` stronger stack pipeline。最新实验表明，本题的下一轮突破点已经不再是继续抠二层权重，而是引入新的低相关底模，再把它们送入已经验证有效的 `phase10-14` stacking 框架。
 
 ## 0. 一图总览
 
@@ -16,7 +16,8 @@
 | 特征增强 | 引入原始 Telco 数据迁移信号 | 给模型补充更强的统计先验 | 有稳定小幅收益 |
 | 结构增强 | 尝试 `Ridge -> XGBoost` 两阶段路线 | 提供与单一树模型不同的建模视角 | 可作为融合候选 |
 | 多样性模型 | 引入 `CatBoost`、`LightGBM`、`RealMLP` | 降低模型同质化，提高融合上限 | `CatBoost` 最强，`RealMLP` 适合低权重补丁 |
-| 受限融合 | 基于 `OOF` 进行筛选、限权和搜索 | 防止“越融越差” | 是当前最佳成绩来源 |
+| 受限融合 | 基于 `OOF` 进行筛选、限权和搜索 | 防止“越融越差” | `phase9` 将线上 best 推到 `0.91606` |
+| 二层 Stacking / Hybrid | 把多模型预测再次作为输入做二层学习 | 吃到更高阶的模型互补关系 | `phase10` 线上 best 达到 `0.91608` |
 
 ```mermaid
 flowchart LR
@@ -25,7 +26,8 @@ flowchart LR
     C --> D[结构增强<br/>Ridge -> XGBoost]
     D --> E[多样性模型<br/>CatBoost / LGBM / RealMLP]
     E --> F[OOF 约束融合<br/>筛选 + 限权 + 搜索]
-    F --> G[提交到 Kaggle<br/>Best Public LB = 0.91606]
+    F --> G[二层 Stacking / Hybrid<br/>Meta Features + Meta Learner]
+    G --> H[提交到 Kaggle<br/>Best Public LB = 0.91608]
 ```
 
 ## 1. 本文适合谁阅读
@@ -221,7 +223,7 @@ ContractType = "Monthly" -> 平均流失率
 
 你可以把整个项目理解成一条不断迭代的主线：
 
-`稳定基线 -> 特征增强 -> 结构增强 -> 模型多样性 -> 受限融合 -> 小幅冲榜`
+`稳定基线 -> 特征增强 -> 结构增强 -> 模型多样性 -> 受限融合 -> 二层 stacking / hybrid -> 小幅冲榜`
 
 为了帮助初学者把“路线”而不是“细节”先记住，可以把项目推进顺序再压缩成下面这张图：
 
@@ -232,7 +234,8 @@ flowchart LR
     C --> D[Diverse Models]
     D --> E[OOF Filtering]
     E --> F[Weighted Blend]
-    F --> G[Leaderboard Submission]
+    F --> G[Stack / Hybrid]
+    G --> H[Leaderboard Submission]
 ```
 
 对应的阶段任务表如下：
@@ -244,6 +247,7 @@ flowchart LR
 | Two-stage Modeling | 引入结构差异 | 一级预测、二级模型 | 结构差异本身就是信息 |
 | Diverse Models | 找更低相关的强模型 | `CatBoost`、`LGBM`、`RealMLP` 结果 | 不要只盯着单模分数 |
 | Blend | 把多模型收益转成线上收益 | 融合配置、权重搜索报告 | 融合必须依赖高质量 `OOF` |
+| Stack / Hybrid | 用二层学习吃掉剩余互补信息 | `stack_report`、`hybrid_report`、meta 配置 | 二层结构有效，但不能替代新底模 |
 
 ## 6. 各阶段方案详解
 
@@ -642,6 +646,151 @@ PaymentMethod = "Electronic check"
 
 这就是为什么一个中等单模，有时仍然值得被保留进融合池。
 
+### 6.11 Phase-10：OOF 二层 Stacking
+
+#### 6.11.1 这一阶段在做什么
+
+`phase10` 的核心目标，是把前面已经证明有效的多个底模预测再送入一个二层模型。  
+你可以把它理解为：
+
+- 第一层模型负责各自给出概率预测
+- 第二层模型负责学习“什么时候该更相信哪一个模型”
+
+这一阶段使用的底模包括：
+
+- `phase8_cat_v1`
+- `phase6_cat_v1`
+- `phase6_lgbm_v1`
+- `phase2_fe_v1`
+- `phase3_ridge_xgb_v1`
+- `phase9_realmlp_v2`
+
+二层特征模式包括：
+
+- `raw`
+- `raw_rank`
+- `raw_rank_logit`
+
+二层学习器包括：
+
+- `LogisticRegression`
+- `Ridge`
+- `XGBoost`
+
+#### 6.11.2 阶段结果
+
+- 最优候选：
+  - `all_core + raw_rank_logit + logreg_l2_c0p25`
+- reference blend OOF：`0.9184677453`
+- stack best OOF：`0.9184538058`
+- Public LB：`0.91608`
+
+这是一个很有教育意义的结果：  
+`phase10` 的本地 OOF 没有超过 `phase9` 的 reference blend，但线上分数反而从 `0.91606` 提升到了 `0.91608`。
+
+#### 6.11.3 给初学者的启发
+
+不要机械地认为“本地 OOF 稍低就一定不能提交”。  
+如果一个新结构在验证方式正确的前提下，只是略低于旧方案，但模型归纳方式明显不同，它仍然可能带来更好的线上泛化。
+
+### 6.12 Phase-11 / Phase-12：窄区间 Hybrid 微调
+
+#### 6.12.1 这一阶段在做什么
+
+`phase11` 和 `phase12` 的思路非常克制：
+
+- 不再扩模型池
+- 只在 `phase10 stack best` 和 `phase9 reference blend` 之间做二元 hybrid
+- 把搜索空间收缩到更小的权重区间
+
+其中：
+
+- `phase11` 同时测试 `prob` 与 `rank`
+- `phase12` 进一步只保留 `rank`，把 `stack_weight` 收窄到 `0.155 - 0.200`
+
+#### 6.12.2 阶段结果
+
+- 本地最佳 OOF 大约抬到：`0.9184687`
+- 代表线上结果：
+  - `phase11 stack blend hybrid v1` -> `0.91607`
+  - `phase12 rank hybrid v1` -> `0.91607`
+
+#### 6.12.3 给初学者的启发
+
+这说明一个常见事实：  
+当候选模型池已经比较稳定后，继续抠融合权重虽然还能提升本地 OOF，但线上往往很快进入平台期。
+
+### 6.13 Phase-13：Hybrid + RealMLP 小权重增强
+
+#### 6.13.1 这一阶段在做什么
+
+`phase13` 继续沿着“小修正”思路前进：
+
+- 以 `phase12 best` 为主干
+- 再把 `phase9_realmlp` 作为极小权重增强项加回去
+
+这里的重点不是让 `RealMLP` 重新变成主角，而是继续验证：
+
+- 这个低相关神经模型，是否还能在更后期的 blend 里继续做误差修正
+
+#### 6.13.2 阶段结果
+
+- 最优局部测试：
+  - `phase12 best + phase9_realmlp`
+  - 最优模式：`rank`
+  - 最佳 `RealMLP` 小权重大约在 `0.02`
+- 本地最优 OOF：`0.9184704303`
+- 但没有形成比 `0.91608` 更高的公开榜 best
+
+#### 6.13.3 给初学者的启发
+
+一个模型可能在项目早期和项目后期承担完全不同的角色。  
+`RealMLP` 在这里已经不是“争夺主模型地位”的路线，而是“保留为小权重修正器”的路线。
+
+### 6.14 Phase-14：更强的二层 Stacking Feature Pipeline
+
+#### 6.14.1 这一阶段在做什么
+
+`phase14` 不再满足于只给二层模型喂“概率列”，而是把二层输入系统化升级为更强的 feature pipeline。
+
+输入基座包括：
+
+- `phase13_hybrid_best_v1`
+- `phase10_stack_best_v1`
+- `phase7_blend_best_v1`
+- `phase8_cat_v1`
+- `phase9_realmlp_v2`
+
+二层特征进一步扩展为：
+
+- `raw`
+- `rank`
+- `logit`
+- `raw_stats`
+- `rank_stats`
+- `anchor gap`
+- `anchor abs gap`
+- `pairwise absdiff`
+
+你可以把它理解成：  
+不仅让二层模型看见“每个底模给了多少分”，还让它看见“底模之间差了多少、相对 anchor 偏了多少、彼此排序差异有多大”。
+
+#### 6.14.2 阶段结果
+
+- 最优候选：
+  - `stack_plus_diversity + full_linear + logreg_newtoncg_c0p25`
+- 最优本地 OOF：`0.9184734996`
+- Public LB：`0.91607`
+
+这说明 `phase14` 已经成为当前最强的本地研究路线，但它仍然没有在线上超过 `phase10`。
+
+#### 6.14.3 给初学者的启发
+
+当“更强的二层结构”只能稳定提升 OOF、却不能继续提升 Public LB 时，一个很合理的判断是：
+
+- 当前真正缺的不是更复杂的二层
+- 而是更新、更低相关、更有信息量的底模
+
 ## 7. 阶段性实验结果总表
 
 下表是当前主线实验最值得关注的结果：
@@ -658,6 +807,11 @@ PaymentMethod = "Electronic check"
 | Phase-7 | phase6 candidate blend opt v1 | `0.9183020` | `0.91591` | OOF 约束融合有效 |
 | Phase-8 | phase8 candidate blend opt v1 | `0.9183841` | `0.91602` | 强单模 + 强融合继续提升 |
 | Phase-9 | realmlp low-weight blend v1 | `0.91846+` | `0.91606` | 低相关补丁模型带来最后一跳 |
+| Phase-10 | stack oof v1 | `0.9184538` | `0.91608` | stacking 首次在线上超过 phase9 |
+| Phase-11 | stack blend hybrid v1 | `0.9184685+` | `0.91607` | 本地略升，线上未破新高 |
+| Phase-12 | rank hybrid v1 | `0.9184687` | `0.91607` | 权重微调已接近平台 |
+| Phase-13 | hybrid plus realmlp v1 | `0.9184704` | `未形成新 best` | RealMLP 继续作为小权重修正器 |
+| Phase-14 | stronger stack pipeline v1/v2 | `0.9184735` | `0.91607` | 当前最强本地路线，但线上不如 phase10 |
 
 这个表最值得记住的不是单个数字，而是下面三条规律：
 
@@ -677,11 +831,13 @@ Baseline 0.91384
    -> Phase-7 0.91591
    -> Phase-8 0.91602
    -> Phase-9 0.91606
+   -> Phase-10 0.91608
 ```
 
 这条曲线最值得初学者注意的地方是：
 
 - 真正可靠的进步，经常不是“暴涨”，而是很多次极小增益的累积。
+- `phase11-14` 虽然继续抬高了本地 OOF，但没有继续突破 `phase10` 的线上最好分数。
 
 ## 8. 从高分公开方案中学到的东西
 
@@ -747,94 +903,137 @@ Baseline 0.91384
 - 控制相关性
 - 控制权重上限
 
+### 8.5 二层 Stacking 已被验证有效，但不是万能钥匙
+
+本项目最新实验给出了一个更细的结论：
+
+- `phase10` 证明了 stacking 确实能带来真实线上增益
+- `phase14` 又证明了更强的二层特征管线还能继续抬高 OOF
+- 但当底模池没有发生本质变化时，二层继续变复杂，并不一定继续提升 Public LB
+
+所以对当前阶段来说，更关键的问题已经变成：
+
+- 如何拿到新的低相关底模
+
+而不是：
+
+- 如何继续在同一批底模上再抠一点二层权重
+
 ## 9. 当前最优方案拆解
 
-截至 `2026-03-20`，当前推荐的比赛主线可以概括为：
+截至 `2026-03-23`，当前推荐的比赛主线已经分成“线上最好解”和“本地研究最强解”两条：
 
-1. 用 `phase8 CatBoost strong` 做最强单模主干
-2. 用 `phase6 CatBoost` 和 `phase6 LightGBM` 提供稳健树模型补充
-3. 用 `phase2 FE` 和 `phase3 Ridge -> XGB` 提供额外结构信息
-4. 用 `phase9 RealMLP v2` 作为低权重多样性补丁
-5. 用 OOF 约束搜索最终融合权重
+1. 线上最好解：`phase10 stack oof v1`
+2. 本地研究最强解：`phase14 stronger stack pipeline`
+3. 共同底座：`phase8_cat`, `phase6_cat`, `phase6_lgbm`, `phase2_fe`, `phase3_ridge_xgb`, `phase9_realmlp`
 
 从思想上看，这不是“大力出奇迹式堆模”，而是更克制的做法：
 
 - 主干模型必须足够强
 - 辅助模型必须确实互补
 - 新模型即使不强，也可以小权重纳入
-- 一切都以 OOF 稳定性为前提
+- 二层结构必须建立在高质量 OOF 之上
+- 一旦二层已经证实有效，下一步重点要回到“新增底模信息”
 
-### 9.1 当前最佳融合结构图
+### 9.1 当前最佳线上结构图
 
 ```mermaid
 flowchart LR
-    A[phase8 CatBoost strong] --> Z[Final Blend]
+    A[phase8 CatBoost strong] --> Z[Phase10 Stack]
     B[phase6 CatBoost] --> Z
     C[phase6 LightGBM] --> Z
     D[phase2 Feature Engineering] --> Z
     E[phase3 Ridge -> XGBoost] --> Z
     F[phase9 RealMLP v2] --> Z
-    Z --> G[submission_blend_opt.csv]
-    G --> H[Public LB 0.91606]
+    Z --> G[submission_stack_best.csv]
+    G --> H[Public LB 0.91608]
 ```
 
-### 9.2 当前最佳融合的角色分工
+### 9.2 当前最佳线上路线的角色分工
 
 下面这张表不是为了让你死记权重，而是帮助你理解“每个模型为什么会被保留”。
 
-| 模型 | 在融合中的角色 | 本地搜索权重示意 | 为什么保留它 |
-| --- | --- | ---: | --- |
-| `phase8_cat_v1` | 最强主干模型 | `0.4483` | 当前最强单模之一，负责提供主预测能力 |
-| `phase6_cat_v1` | 次强树模型补充 | `0.1503` | 与主干接近，但仍有额外增益 |
-| `phase6_lgbm_v1` | 树模型差异补充 | `0.1037` | 与 CatBoost 存在实现差异，能补部分边界样本 |
-| `phase2_fe_v1` | 特征增强支路 | `0.0880` | 吃到了原始迁移特征带来的统计信息 |
-| `phase3_ridge_xgb_v1` | 结构差异支路 | `0.0897` | 两阶段建模方式不同，提供额外结构信号 |
-| `phase9_realmlp_v2` | 低权重多样性补丁 | `0.1200` | 单模不强，但能修正部分树模型共性错误 |
+| 组件 | 在当前路线中的角色 | 为什么保留它 |
+| --- | --- | --- |
+| `phase8_cat_v1` | 最强树模型锚点 | 提供当前最强单模信号 |
+| `phase6_cat_v1` | 次强树模型补充 | 和 `phase8` 同家族但仍有边界差异 |
+| `phase6_lgbm_v1` | 树模型差异补充 | 与 CatBoost 的实现差异带来额外信息 |
+| `phase2_fe_v1` | 原始迁移特征支路 | 强化统计先验与映射特征 |
+| `phase3_ridge_xgb_v1` | 结构差异支路 | 两阶段路线提供不同归纳偏好 |
+| `phase9_realmlp_v2` | 神经表格补丁 | 单模不强，但具备低相关修正价值 |
+| `phase10` meta learner | 二层学习器 | 负责学习“什么时候更该相信哪一个底模” |
 
 对初学者来说，这张表最重要的含义是：
 
-- 融合中的模型，不是“谁分高就加谁”，而是“谁强且互补就留下谁”。
+- 当前最好解已经不只是简单加权平均，而是“强底模 + 二层学习”。
+
+### 9.3 当前最强本地研究路线
+
+当前最强本地路线不是 `phase10`，而是 `phase14 stronger stack pipeline`。  
+它进一步把下面这些输入再做了更强的二层特征化：
+
+- `phase13_hybrid_best_v1`
+- `phase10_stack_best_v1`
+- `phase7_blend_best_v1`
+- `phase8_cat_v1`
+- `phase9_realmlp_v2`
+
+并使用了：
+
+- `raw / rank / logit`
+- 统计特征
+- anchor gap 特征
+- pairwise absdiff 特征
+
+它的价值在于：
+
+- 证明当前二层框架还有继续吃信息的能力
+
+它的限制也很明确：
+
+- 在现有底模池不变的前提下，它还没有转化成更高的线上分数
 
 ## 10. 下一轮冲分方向
 
 如果后续继续优化，当前最值得投入的方向有三类。
 
-### 10.1 方向 A：更强的 CatBoost 特征版
+### 10.1 方向 A：新增真正低相关的底模
 
 目标：
 
+- 引入与当前树模型、现有 `RealMLP` 明显不同的新模型族
+- 优先关注更强的 tabular NN / 新多样性模型
+- 核心衡量标准不只是单模 AUC，还要看与 `phase10/phase14` 基座的相关性
+
+理由：
+
+- 当前二层结构已经足够强
+- 真正缺的是新的信息来源，而不是新的二层权重
+
+### 10.2 方向 B：更强的原始迁移特征分支
+
+目标：
+
+- 继续加强 `CatBoost` 或其他强树模型的原始数据迁移特征
 - 系统补齐 `ORIG_proba_cross`
-- 引入更稳定的 `pctrank_gap`
-- 引入条件分位数特征
+- 引入更稳定的 `pctrank_gap`、条件分位数和更高信息密度的统计信号
 
 理由：
 
-- `CatBoost` 已经证明自己是最强单模之一
-- 在强模型上继续加高质量特征，风险相对更低
+- 新底模之外，最有希望继续提升底座质量的仍然是更强的特征迁移路线
 
-### 10.2 方向 B：继续拓展低相关模型
+### 10.3 方向 C：复用 `phase14`，停止纯权重内卷
 
 目标：
 
-- 继续探索 `RealMLP`
-- 评估 `TabM`
-- 重点考察单模质量与相关性，而不只看单模分数
+- 一旦出现新底模，直接送进 `phase14` 管线做统一比较
+- 不再单独花很多轮次抠 `phase11 / phase12 / phase13 / phase14` 的窄区间权重
+- 把实验资源集中到“底模新增益是否真实存在”上
 
 理由：
 
-- 当前最大的瓶颈不是缺树模型，而是缺真正互补的新模型族
-
-### 10.3 方向 C：二层 stacking
-
-目标：
-
-- 以前几轮积累下来的高质量 OOF 为输入
-- 训练轻量 meta learner，例如 `Ridge`、`LogisticRegression` 或小型 `XGBoost`
-
-理由：
-
-- 简单加权融合已经接近上限
-- 如果后续引入更多低相关模型，stacking 可能进一步吃到结构增益
+- 当前已经知道二层结构是有效的
+- 继续在同一批模型上做局部微调，边际收益太低
 
 ## 11. 初学者最容易犯的错误
 
@@ -905,15 +1104,17 @@ flowchart LR
 - 用 `Ridge -> XGBoost` 增加结构差异
 - 用 `CatBoost/LightGBM` 引入更强树模型族
 - 用 OOF 约束融合把多模型价值转化为线上收益
-- 用 `RealMLP` 这样的低相关模型完成最后一跳
+- 用 `RealMLP` 这样的低相关模型补齐多样性
+- 再把多个底模送进 `phase10-14` 的二层 stacking / hybrid 框架
 
-截至 `2026-03-20`，当前最佳公开榜成绩为 `0.91606`。  
+截至 `2026-03-23`，当前最佳公开榜成绩为 `0.91608`，来自 `phase10 stack oof v1`；当前最佳本地 OOF 为 `0.9184734996`，来自 `phase14 stronger stack pipeline`。  
 这个结果最重要的意义不是“分数本身有多高”，而是它验证了以下判断：
 
 1. 防泄漏验证链路是整个项目的地基。
 2. 原始数据迁移信号是本题最重要的增益来源之一。
 3. 后期上分的核心是模型多样性，而不是继续在同构模型里反复微调。
-4. 好的融合必须建立在高质量 OOF 和严格筛选之上。
+4. 二层 stacking 已经被验证有效，但当底模池不再变化时，继续抬高 OOF 不一定能继续抬高 Public LB。
+5. 下一轮真正值得投入的方向，是新增低相关底模，再复用现有强二层框架。
 
 如果你是初学者，最值得复制的不是某一组具体参数，而是这条工作方法：
 
