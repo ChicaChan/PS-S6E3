@@ -1,0 +1,61 @@
+{
+  "run_name": "phase16_catboost_orig_transfer_v4_screen",
+  "target_col": "Churn",
+  "id_col": "id",
+  "positive_label": "Yes",
+  "negative_label": "No",
+  "seed": 42,
+  "n_folds": 2,
+  "inner_folds": 2,
+  "max_te_categories": 800,
+  "orig_data_path": "/kaggle/input/datasets/blastchar/telco-customer-churn/WA_Fn-UseC_-Telco-Customer-Churn.csv",
+  "top_cats_for_ngram": [
+    "Contract",
+    "InternetService",
+    "PaymentMethod"
+  ],
+  "orig_single_mode": "selected",
+  "orig_single_cols": [
+    "Contract",
+    "PaymentMethod",
+    "InternetService",
+    "OnlineSecurity"
+  ],
+  "enable_orig_cross": false,
+  "enable_orig_support_features": false,
+  "enable_orig_logit_features": false,
+  "enable_pctrank_orig": true,
+  "enable_pctrank_churn_gap": true,
+  "enable_zscore_orig": false,
+  "conditional_rank_group_cols": [
+    "InternetService"
+  ],
+  "conditional_rank_value_col": "TotalCharges",
+  "conditional_residual_specs": [],
+  "frequency_numeric_cols": [
+    "TotalCharges"
+  ],
+  "frequency_categorical_cols": [
+    "Contract"
+  ],
+  "quantile_distance_cols": [
+    "TotalCharges"
+  ],
+  "quantile_levels": [
+    0.5
+  ],
+  "cat_params": {
+    "loss_function": "Logloss",
+    "eval_metric": "AUC",
+    "learning_rate": 0.08,
+    "depth": 4,
+    "l2_leaf_reg": 3.0,
+    "n_estimators": 1200,
+    "random_seed": 42,
+    "verbose": 0,
+    "task_type": "GPU",
+    "use_best_model": true,
+    "od_type": "Iter",
+    "od_wait": 40
+  }
+}

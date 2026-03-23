@@ -1,0 +1,13 @@
+{
+  "dataset_sources": [
+    "chicachan/ps-s6e3-phase15-stack-inputs"
+  ],
+  "code_file": "stack_pipeline_search.py",
+  "language": "python",
+  "title": "PS-S6E3 Phase15 Stack Plus Orig XGB V1",
+  "is_private": "true",
+  "kernel_type": "script",
+  "enable_gpu": "false",
+  "enable_internet": "false",
+  "id": "chicachan/ps-s6e3-phase15-stack-plus-orig-xgb-v1"
+}

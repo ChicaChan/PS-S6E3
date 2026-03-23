@@ -1,0 +1,17 @@
+{
+  "competition_sources": [
+    "playground-series-s6e3"
+  ],
+  "dataset_sources": [
+    "blastchar/telco-customer-churn",
+    "cdeotte/s6e3-original-dataset"
+  ],
+  "code_file": "train_phase15_orig_fe_xgb.py",
+  "language": "python",
+  "title": "PS-S6E3 Phase15 Orig FE XGB V1",
+  "is_private": "true",
+  "kernel_type": "script",
+  "enable_gpu": "true",
+  "enable_internet": "false",
+  "id": "chicachan/ps-s6e3-phase15-orig-fe-xgb-v1"
+}
