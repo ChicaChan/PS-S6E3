@@ -123,9 +123,88 @@
      - 已给 `phase5_xgb_advanced/kernel-metadata.json` 增加 `dataset_sources`（`blastchar/telco-customer-churn`, `cdeotte/s6e3-original-dataset`）
      - 已推送 `phase5` v2，当前状态：`QUEUED`（等待运行）
 
+### 2026-03-19T11:02:24+0800
+
+9. 远程结果回收与路线修正（已完成）
+   - Kaggle 状态:
+     - `chicachan/ps-s6e3-xgb-advanced-v1` -> `COMPLETE`
+     - `chicachan/ps-s6e3-diverse-tree-v1` -> `COMPLETE`
+   - Phase-5 v2:
+     - OOF AUC: `0.909806`
+     - 日志确认已使用原始参考数据
+     - 结论: 即使修复数据挂载，`phase5` 方案本身仍显著弱于现有最优路线，应停止继续提交
+   - Phase-6:
+     - LGBM OOF AUC: `0.9158487`
+     - CatBoost OOF AUC: `0.9180636`
+     - Ensemble OOF AUC: `0.9179283`
+   - 当前判断:
+     - 最值得优先实盘测试的是 `phase6 CatBoost` 单模
+     - `phase6 ensemble` 可作为第二候选
+10. Phase-7 本地融合复核（已完成）
+   - 配置:
+     - `kaggle_kernel/phase7_blend_oof/local_blend_config_phase6_candidates.json`
+     - 候选模型: `phase6_cat`, `phase6_lgbm`, `phase3`, `phase2`, `th999`
+     - 相关性阈值: `0.994`
+     - 搜索轮数: `500`
+   - 过滤结果:
+     - 保留: `phase6_cat_v1`, `phase2_fe_v1`, `phase6_lgbm_v1`
+     - 剔除:
+       - `phase1_pl_th999_v1`（max corr `0.99585`）
+       - `phase3_ridge_xgb_v1`（max corr `0.99740`）
+   - 融合结果:
+     - equal-rank OOF AUC: `0.9180864`
+     - best OOF AUC: `0.9183020`
+     - best method: `prob`
+     - best weights:
+       - `phase6_cat_v1`: `0.6629`
+       - `phase2_fe_v1`: `0.1699`
+       - `phase6_lgbm_v1`: `0.1672`
+   - 结论:
+     - 相比 `phase6_cat` 单模仅小幅提升，属于可提交验证但不应高预期的候选
+     - 本地已完成 `phase6_cat`、`phase6 ensemble`、`phase7 candidate blend` 的提交格式校验
+11. Phase-6 CatBoost 正式提交（已完成）
+   - Timestamp: `2026-03-19T11:06:43+0800`
+   - 提交文件:
+     - `kaggle_kernel/phase6_diverse_tree/output_v1/submission_cat.csv`
+   - Kaggle message:
+     - `phase6 catboost v1`
+   - Public LB:
+     - `0.91581`
+   - 结果判断:
+     - 成功超过此前最佳 `0.91407`
+     - 当前新最佳路线已从 `phase4 blend` 切换为 `phase6 CatBoost` 单模
+   - 下一优先级:
+     - `phase6 ensemble v1`
+     - `phase7 candidate blend`
+12. Phase-6 Ensemble 正式提交（已完成）
+   - Timestamp: `2026-03-19T11:11:25+0800`
+   - 提交文件:
+     - `kaggle_kernel/phase6_diverse_tree/output_v1/submission.csv`
+   - Kaggle message:
+     - `phase6 ensemble v1`
+   - Public LB:
+     - `0.91567`
+   - 结果判断:
+     - 略低于 `phase6 catboost v1` 的 `0.91581`
+     - 不作为当前最佳保留路线
+13. Phase-7 Candidate Blend 正式提交（已完成）
+   - Timestamp: `2026-03-19T11:11:25+0800`
+   - 提交文件:
+     - `kaggle_kernel/phase7_blend_oof/output_phase6_candidates/submission_blend_opt.csv`
+   - Kaggle message:
+     - `phase7 phase6 candidate blend opt v1`
+   - Public LB:
+     - `0.91591`
+   - 结果判断:
+     - 成功超过 `phase6 catboost v1` 的 `0.91581`
+     - 当前项目最佳提交更新为 `phase7 phase6 candidate blend opt v1`
+   - 启示:
+     - 这次小幅增益证明 `phase6_cat + 少量低相关候选` 的受限融合是有效的
+     - 但提升幅度仍小，下一轮要想继续上分，重点应该放在创造更强的新模型多样性，而不是继续在当前几组高相关模型里微调权重
+
 ### 2026-03-22T04:53:06+0800
 
-9. Phase-10 Stack OOF v1（已完成）
+14. Phase-10 Stack OOF v1（已完成）
    - Kernel: `chicachan/ps-s6e3-stack-oof-v1`
    - Artifact:
      - `kaggle_kernel/phase10_stack_oof/output_v4/phase10_stack_v1/stack_report.json`
